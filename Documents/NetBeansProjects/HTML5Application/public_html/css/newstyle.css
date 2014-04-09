@@ -1,0 +1,13 @@
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/DENISLAV\/Documents\/NetBeansProjects\/HTML5Application\/public_html\/scss\/newstyle\.scss}line{font-family:\000032}}
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/DENISLAV\/Documents\/NetBeansProjects\/HTML5Application\/public_html\/scss\/newstyle\.scss}line{font-family:\000038}}
+nav li {
+  display: inline-block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/DENISLAV\/Documents\/NetBeansProjects\/HTML5Application\/public_html\/scss\/newstyle\.scss}line{font-family:\0000310}}
+nav a {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none; }
