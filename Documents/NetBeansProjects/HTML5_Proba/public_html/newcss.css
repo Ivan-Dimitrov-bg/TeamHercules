@@ -1,0 +1,80 @@
+/* Corrects `block` display not defined in IE 6/7/8/9 and Firefox 3. */ 
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
+    display: block;
+}
+
+/* Corrects `inline-block` display not defined in IE 6/7/8/9 and Firefox 3. */
+ 
+audio, canvas, video {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #a9a9a9;
+}
+
+#wrapper {
+    width: 900px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.current {
+    background-color: #d3d3d3;
+}
+
+h1 {
+    color: #fafad2;
+}
+
+header a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header h1 {
+    text-align: center;
+}
+
+article h1 {
+    text-align: left;
+}
+
+footer a {
+    text-decoration: none;
+    color: black;
+    font-weight: normal;
+    text-align: left;
+}
+
+footer p {
+    font-weight: normal;
+    text-align: left;
+}
+
+footer {
+    text-align: center;
+    font-weight: bold;
+}
+
+p {
+    font-weight: bold;
+}
+
+nav {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+}
