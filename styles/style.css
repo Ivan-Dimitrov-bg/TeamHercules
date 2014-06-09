@@ -4,6 +4,7 @@
     background-color: black;
     width: 790px;
     height:190px;
+    position:absolute;
 }
 
 #game rect{
@@ -18,4 +19,12 @@
   stroke: #000000;
   stroke-width: 1px;
 
+}
+
+canvas {
+	position: absolute;
+	z-index: 2;
+    width: 790px;
+    height:190px;
+	border: 1px solid black;
 }
