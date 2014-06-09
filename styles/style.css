@@ -2,8 +2,8 @@
     border-style:solid;
     border-width: 2px;
     background-color: black;
-    width: 790px;
-    height:190px;
+    width: 1150px;
+    height:320px;
     position:absolute;
 }
 
@@ -22,9 +22,9 @@
 }
 
 canvas {
-	position: absolute;
-	z-index: 2;
-    width: 790px;
-    height:190px;
-	border: 1px solid black;
+position: absolute;
+z-index: 2;
+    width: 1150px;
+    height:320px;
+border: 1px solid black;
 }
