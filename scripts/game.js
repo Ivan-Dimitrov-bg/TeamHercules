@@ -216,7 +216,7 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 		ctx.closePath();
 		ctx.fillStyle = this.fillColor;
 		ctx.strokeStyle = this.strokeColor;
-		ctx.lineWidth = 3;
+		ctx.lineWidth = 4;
 		ctx.stroke();
     	ctx.fill();
 		//eyes
@@ -286,11 +286,11 @@ function creatGuardians(guardiansCount, maxX, maxY) {
     	var x = guardiansPositions[i].x,
     		y = guardiansPositions[i].y,
     		radius = 9,
-    		direction = randomDirection(),						//TODO
-    		fillColor = getRandomColor();		//'black'
+    		direction = randomDirection();						//TODO
+    		//fillColor = getRandomColor();
     		//ctx.lineWidth = 3;
     				
-    	var guardian = new Guardian(x, y, radius, 3, direction, fillColor, 'yellow');
+    	var guardian = new Guardian(x, y, radius, 3, direction, 'black', 'yellowgreen');
     
     	guardians.push(guardian);
     }
