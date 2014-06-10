@@ -210,8 +210,8 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 
 	this.draw = function(ctx) {
 		ctx.beginPath();
-		ctx.quadraticCurveTo(this.x - this.radius, this.y + this.radius, this.x, this.y);
-		ctx.lineTo(this.x + this.radius, this.y + this.radius);
+		ctx.quadraticCurveTo(this.x - this.radius * 0.75, this.y + this.radius * 0.75, this.x, this.y);
+		ctx.lineTo(this.x + this.radius * 0.75, this.y + this.radius * 0.75);
 		ctx.arc(this.x, this.y, this.radius, Math.PI, 2 * Math.PI);
 		ctx.closePath();
 		ctx.fillStyle = this.fillColor;
