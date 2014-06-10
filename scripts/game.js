@@ -216,7 +216,24 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 		ctx.closePath();
 		ctx.fillStyle = this.fillColor;
 		ctx.strokeStyle = this.strokeColor;
+		ctx.lineWidth = 3;
 		ctx.stroke();
+    	ctx.fill();
+		//eyes
+		ctx.beginPath();
+		ctx.arc(this.x + radius/4, this.y - this.radius / 2, this.radius / 5, 0, 2 * Math.PI);
+		ctx.arc(this.x - radius/4, this.y - this.radius / 2, this.radius / 5, 0, 2 * Math.PI);
+		ctx.fillStyle = 'white';
+		ctx.strokeStyle = 'black';
+		ctx.lineWidth = 1;
+		ctx.stroke();
+    	ctx.fill();
+		//pupils
+		ctx.beginPath();
+		ctx.arc(this.x + radius/4, this.y - this.radius / 2, 1, 0, 2 * Math.PI);
+		ctx.arc(this.x - radius/4, this.y - this.radius / 2, 1, 0, 2 * Math.PI);
+		ctx.fillStyle = 'black';
+		ctx.lineWidth = 1;
     	ctx.fill();
 	 };
 
@@ -239,18 +256,39 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 				break;
 		}
     }
+	
+	this.detectWallCollision = function (maxX, maxY) {		//TODO
+	//outside walls
+		if (this.x < this.radius) {
+			 this.direction = "right";
+		 }
+		 if (this.x > maxX - this.radius) {
+			 this.direction = "left";
+		 }
+		 if (this.y < this.radius) {
+			this.direction = "down";
+		 }
+		 if (this.y > maxY - this.radius) {
+			this.direction = "up";
+		 }
+	}
 }
 
-function creatGuardians(guardiansCount) {
-    guardians = [];
+function creatGuardians(guardiansCount, maxX, maxY) {
+    guardians = [],
+	guardiansPositions = [{'x': 20, y: 15},						//TODO
+					{'x': maxX - 50, y: 15},
+					{'x': 20, y: maxY - 25},
+					{'x': maxX - 50, y: maxY - 25}	
+];
 
     for (i = 0; i < guardiansCount; i++) {
-    	var x = getRandomValue(10, 780),			//TODO
-    		y = getRandomValue(10, 180 ),           //TODO
-    		radius = 7,
-    		direction = randomDirection(),
-    		fillColor = getRandomColor();
-    		ctx.lineWidth = 3;
+    	var x = guardiansPositions[i].x,
+    		y = guardiansPositions[i].y,
+    		radius = 9,
+    		direction = randomDirection(),						//TODO
+    		fillColor = getRandomColor();		//'black'
+    		//ctx.lineWidth = 3;
     				
     	var guardian = new Guardian(x, y, radius, 3, direction, fillColor, 'yellow');
     
@@ -263,8 +301,10 @@ function creatGuardians(guardiansCount) {
 drawField(fieldWalls);
 
 var canvas = document.getElementById("canvas"),
-ctx = canvas.getContext("2d"),
-guardians = creatGuardians(4);
+	ctx = canvas.getContext("2d"),
+	maxX = ctx.canvas.width,
+	maxY = ctx.canvas.height,
+	guardians = creatGuardians(4, maxX, maxY);
 
 var pacMan = new PacMan(128,28, 'left');
 StartChangeDirectionListener(pacMan);
@@ -278,6 +318,7 @@ function gameCicle()
     for (i = 0; i < guardians.length; i++) {
 		guardians[i].draw(ctx);
 		guardians[i].move();
+		guardians[i].detectWallCollision(maxX, maxY);
 
 	}
 }
@@ -301,7 +342,8 @@ function getRandomColor() {
 		return "rgb(" + red + "," + green + "," + blue + ")";
 }
 
-function randomDirection(direction) {
+function randomDirection() {
+	var direction;
 
 	if (Math.random() <= 0.25){
 
