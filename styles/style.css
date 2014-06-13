@@ -3,7 +3,7 @@
     border-width: 2px;
     background-color: black;
     width: 1150px;
-    height:320px;
+    height:450px;
     position:absolute;
 }
 
@@ -25,6 +25,14 @@ canvas {
 position: absolute;
 z-index: 2;
     width: 1150px;
-    height:320px;
+    height:450px;
 border: 1px solid black;
+}
+
+#kinetic {
+	position: absolute;
+	z-index: 3;
+    width: 1150px;
+    height:450px;
+	border: 1px solid black;
 }
