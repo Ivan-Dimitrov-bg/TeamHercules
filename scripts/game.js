@@ -555,7 +555,7 @@ function randomDirection() {
 
 	}
 
-return direction;		
+return direction;	
 
 }
 //added function for popup box /Tsonko
