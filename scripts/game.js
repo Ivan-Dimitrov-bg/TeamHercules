@@ -510,7 +510,7 @@ function gameCicle()
 
     for (i = 0; i < guardians.length; i++) {
 		guardians[i].draw(ctx);
-		guardians[i].move();
+		//guardians[i].move();
 		guardians[i].detectWallCollision(maxX, maxY);
 	}
 }
@@ -555,7 +555,7 @@ function randomDirection() {
 
 	}
 
-return direction;		
+return direction;	
 
 }
 //added function for popup box /Tsonko
@@ -621,3 +621,4 @@ createTooltipElement();
 // assign mouse over event to handler
 assignHandler();
 //Additional implementation to add close button on popup
+//setTrap();
