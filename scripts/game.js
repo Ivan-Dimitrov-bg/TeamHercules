@@ -1,6 +1,6 @@
 ﻿var fieldWalls = LevelsDesign[0].labyrinth;
 var allLetters = initializeFood(1);
-console.log(allLetters);
+
 
 var cellHeight = 50;
 var wallHeight = 6;
@@ -9,8 +9,14 @@ var score = 0;
 
 function Game() {
 
-    this.pause = true;   
+    this.pause = true;
+    this.lavel = 1;
 }
+
+var game = new Game();
+game.pause = false;
+
+
 //maze
 function drawField(fieldWalls) {
 
@@ -158,18 +164,20 @@ StartChangeDirectionListener(pacMan);
 
 function gameCicle()
 {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
-    drawLetters(allLetters, ctx);
-    ctx.fillText(20, 20, "h");
-     pacMan.draw();
-     pacMan.move();
+    if (game.pause === false) {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
+        drawLetters(allLetters, ctx);
+        ctx.fillText(20, 20, "h");
+        pacMan.draw();
+        pacMan.move();
 
-    for (i = 0; i < guardians.length; i++) {
-		guardians[i].draw(ctx);
-		guardians[i].move();
-		guardians[i].detectWallCollision(maxX, maxY);
-	}
-	displayScore();
+        for (i = 0; i < guardians.length; i++) {
+            guardians[i].draw(ctx);
+            guardians[i].move();
+            guardians[i].detectWallCollision(maxX, maxY);
+        }
+        displayScore();
+    }
 }
 
 setInterval(function () {gameCicle();}, 40);

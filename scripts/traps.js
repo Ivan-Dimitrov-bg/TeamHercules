@@ -131,16 +131,19 @@ function setTrap() {
 				playerAnswer = keyChar;
 				checkIfTrueAnswer();
 				hideLayer(layer);
+				game.pause = false;
 			}
 			if (ev.keyCode === 66) {
 				playerAnswer = keyChar;
 				checkIfTrueAnswer();
 				hideLayer(layer);
+                game.pause = false;
 			}
 			if (ev.keyCode === 67) {
 				playerAnswer = keyChar;
 				checkIfTrueAnswer();
 				hideLayer(layer);
+                game.pause = false;
 			}
 		});		
 	}
@@ -159,8 +162,8 @@ function setTrap() {
 
 //check if answer is correct or not
 	function checkIfTrueAnswer() {		
-		if (playerAnswer == trapsAll[randomTrapIndex]['correct']) {
-			updateScore();
+	    if (playerAnswer == trapsAll[randomTrapIndex]['correct']) {
+		    score += 100;
 			//make pacMan faster
 			//pacManSpeed += 2;								//TODO
 			//reset speed after 10 seconds
@@ -179,4 +182,3 @@ function setTrap() {
 		layer.remove();
 	}
 }
-setTrap();

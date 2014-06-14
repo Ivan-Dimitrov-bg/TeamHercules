@@ -79,7 +79,8 @@ function PacMan(x,y,direction, speed) {
             if (dX + dY < this.r*2/3) {
                 score += 10;
                 if (letter.letter == '{') {
-
+                    setTrap();
+                    game.pause = true;
                 }
                 allLetters.splice(i, 1);
             }
