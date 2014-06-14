@@ -1,17 +1,21 @@
 ﻿var fieldWalls = [
-    "---------------------- ",
-    "||  |          |      |",
-    "-- -           --    - ",
-    "|  |           |  |   |",
-    "--     --     -----   |",
-    "|  |   |       |      |",
-    "- -            -- --   ",
-    "|      |           |  |",
-    "    ----               ",
-    "|  | | |           |  |",
-    "   -           -----   ",
-    "|   |  |           |  |",
-    "---------------------- "
+    "------------------- ",
+    "|    |        |    |",
+    "-- --  - -- - --  - ",
+    "| |   ||||   |   | |",
+    " - ---   ---  ----  ",
+    "|| |   |    |||    |",
+    "- - --  ---   - --  ",
+    "|      ||  ||| || ||",
+    "--  ---       -  -  ",
+    "| || || |  | |  |  |",
+    " - -    ---   -- -- ",
+    "|   ||||    |||    |",
+	" --    -  -- ---- - ",
+    "||  | | ||       |||",
+	" - -  -  -- --- -   ",
+    "|    |     |       |",
+    "------------------- "
 ];
 
 var cellHeight = 50;
@@ -121,14 +125,21 @@ function PacMan(x,y,direction, speed) {
         if (detectCollisionsWithWalls(direction, this.positionX, this.positionY)) {
             collisionDetected = true;
         }
-		if (detectCollisionsWithTrap()) {
+		if (detectCollisionsWithFood()) {		//TODO
+			updateScore();
+		}
+		if (detectCollisionsWithTrap()) {		//TODO
 		//pause game
 			setTrap();
 		//resume game
 		}
+
         return collisionDetected;
 
     };
+}
+function detectCollisionsWithFood() {		//TODO
+	return false;
 }
 function detectCollisionsWithTrap() {		//TODO
 	return false;
@@ -307,10 +318,10 @@ function changeGuardianDirection() {		//TODO
 
 function creatGuardians(guardiansCount, maxX, maxY) {
     guardians = [],
-	guardiansPositions = [{'x': 29, y: 30},						//TODO - fix initial coordinates when the maze is final
-					{'x': maxX - 70, y: 30},
-					{'x': 29, y: maxY - 170},
-					{'x': maxX - 70, y: maxY - 170}	
+	guardiansPositions = [{'x': 30, y: 30},						//TODO - fix initial coordinates when the maze is final
+					{'x': maxX - 30, y: 30},
+					{'x': 30, y: maxY - 70},
+					{'x': maxX - 30, y: maxY - 70}	
 ];
 
     for (i = 0; i < guardiansCount; i++) {
@@ -320,7 +331,6 @@ function creatGuardians(guardiansCount, maxX, maxY) {
 			guardianSpeed = 3
     		direction = randomDirection();						//TODO - change direction eventually
     		//fillColor = getRandomColor();
-    		//ctx.lineWidth = 3;
     				
     	var guardian = new Guardian(x, y, radius, guardianSpeed, direction, 'black', 'yellowgreen');
     
@@ -332,23 +342,35 @@ function creatGuardians(guardiansCount, maxX, maxY) {
 //traps
 function setTrap() {
 	var trapsAll = [{
-		'question': 'question1',
-		'a': 'answer 1 a',
-		'b': 'answer 1 b',
-		'c': 'answer 1 c',
+		'question': 'What is the type of NaN?',
+		'a': 'NaN has a type?!',
+		'b': 'number',
+		'c': 'undefined',
+		'correct': 'b'
+	}, {
+	    'question': 'How do you create a variable zap that is equal to the string "Whazaaaaap?"?',
+	    'a': 'string zap = "Whazaaaaap?";',
+	    'b': 'var zap = "Whazaaaaap?"',
+	    'c': 'I shout at my screen "Whazaaaaap?"',
+		'correct': 'b'
+	}, {
+		'question': 'How do you create a <div> element using JavaScript?',
+		'a': 'document .createElement("div")',
+		'b': 'document .getElementByTagName("div")',
+		'c': 'I had no idea I could do that.',
 		'correct': 'a'
 	}, {
-		'question': 'question2',
-		'a': 'answer 2 a',
-		'b': 'answer 2 b',
-		'c': 'answer 2 c',
-		'correct': 'b'
+		'question': 'Who should have a statue raised in the JavaScript Museum?',
+		'a': 'Gosho',
+		'b': 'Pesho',
+		'c': 'Both',
+		'correct': 'c'
 	}, {
-		'question': 'question3',
-		'a': 'answer 3 a',
-		'b': 'answer 3 b',
-		'c': 'answer 3 c',
-		'correct': 'b'
+		'question': 'How do you add a comment in JavaScript?',
+		'a': 'I just share my opinion.',
+		'b': '<!--This is a comment.-->',
+		'c': '//This is a comment.',
+		'correct': 'c'
 	}
 	],
 	trapsAllLength = trapsAll.length,
@@ -372,22 +394,56 @@ function setTrap() {
 			width: stage.width() * 0.75,
 			height: stage.height() * 0.75,
 			fill: 'black',
-			stroke: 'yellowgreen',
+			stroke: 'purple',
 			strokeWidth: 4,
 			cornerRadius: 10
 		  });	
 		layer.add(trapBubble);
 		return trapBubble;
 	}
-	
+	function drawRiddle(trapBubble, layer) {
+		var riddle = new Kinetic.Text({
+			x: trapBubble.x() + trapBubble.width() / 2,
+			y: trapBubble.y(),
+			text: 'Uh oh! You fell into a trap!',
+			fontSize: 30,
+			fontFamily: 'Calibri',
+			fill: 'yellow',
+			width: trapBubble.width(),
+			padding: 20,
+			align: 'center'
+		});
+		riddle.offsetX(riddle.width()/2);		//center
+		layer.add(riddle);
+		return riddle;
+	} 
+	function drawTip(trapBubble, layer) {
+		var tip = new Kinetic.Text({
+			x: trapBubble.x() + trapBubble.width() / 2,
+			y: trapBubble.y() + 40,
+			text: 'Seems like the JavaScript Guardians won\'t let you steal the museum\'s treasures so easily. Solve the riddle below to become faster for a while. But be careful! If your answer is wrong, you\'ll become slower.',
+			fontSize: 15,
+			fontFamily: 'Calibri',
+			fill: '#888',
+			width: trapBubble.width(),
+			padding: 20,
+			align: 'center'
+		});
+		tip.offsetX(tip.width()/2);		//center
+		layer.add(tip);
+		return tip;
+	} 
 	function drawTrapQuestion(trapBubble, traps, trapIndex, layer) {
 		var trapQuestion = new Kinetic.Text({
 			x: trapBubble.x() + trapBubble.width() / 2,
-			y: trapBubble.y() + 15,
+			y: trapBubble.y() + 100,
 			text: trapsAll[randomTrapIndex]['question'],
 			fontSize: 30,
 			fontFamily: 'Calibri',
-			fill: 'yellowgreen'
+			fill: 'yellowgreen',
+			width: trapBubble.width(),
+			padding: 20,
+			align: 'center'
 		});
 		trapQuestion.offsetX(trapQuestion.width()/2);		//center
 		layer.add(trapQuestion);
@@ -397,12 +453,15 @@ function setTrap() {
 	function drawTrapAnswer (trapBubble, x, letter, traps, trapIndex, layer) {
 		var trapAnswer = new Kinetic.Text({
 			x: x,
-			y: trapBubble.y() + trapBubble.height() - 30 - 15,				//-30 == - fontSize
+			y: trapBubble.y() + trapBubble.height() - 30 - 50,				//-30 == - fontSize
 			text: letter + ') ' + trapsAll[randomTrapIndex][letter],
-			fontSize: 30,
+			fontSize: 22,
 			fontFamily: 'Calibri',
 			fill: 'yellowgreen',
-			id: letter
+			id: letter,
+			width: trapBubble.width() / 3,
+			padding: 2,
+			align: 'center'
 		});
 		trapAnswer.offsetX(trapAnswer.width()/2);			//center	
 		
@@ -412,11 +471,13 @@ function setTrap() {
 	}	
 //draw
 	var trapBubble = drawTrapBubble(),
+		riddle = drawRiddle(trapBubble, layer),
+		tip = drawTip(trapBubble, layer),
 		trapQuestion = drawTrapQuestion(trapBubble, trapsAll, randomTrapIndex, layer);
 
 //draw answers
 //a
-	x = trapBubble.x() + trapBubble.width() / 2 - 200;
+	x = trapBubble.x() + trapBubble.width() / 2 - trapBubble.width() / 3;
 	
 	var trapAnswerA = drawTrapAnswer(trapBubble, x, 'a', trapsAll, randomTrapIndex, layer);
 
@@ -427,7 +488,7 @@ function setTrap() {
 	var trapAnswerB	= drawTrapAnswer(trapBubble, x, 'b', trapsAll, randomTrapIndex, layer);
 
 //c
-	x = trapBubble.x() + trapBubble.width() / 2 + 200;
+	x = trapBubble.x() + trapBubble.width() / 2 + trapBubble.width() / 3;
 
 	var trapAnswerC	= drawTrapAnswer(trapBubble, x, 'c', trapsAll, randomTrapIndex, layer);
 
@@ -443,27 +504,32 @@ function setTrap() {
 			if (ev.keyCode === 65) {
 				playerAnswer = keyChar;
 				checkIfTrueAnswer();
+				hideLayer(layer);
 			}
 			if (ev.keyCode === 66) {
 				playerAnswer = keyChar;
 				checkIfTrueAnswer();
+				hideLayer(layer);
 			}
 			if (ev.keyCode === 67) {
 				playerAnswer = keyChar;
 				checkIfTrueAnswer();
+				hideLayer(layer);
 			}
 		});		
 	}
+	
 	function onPickTrapAnswerClick (trapAnswer) {
 		trapAnswer.on('click', function() {
 			playerAnswer = this.id();
 			checkIfTrueAnswer();
+			hideLayer(layer);
 		});
 	}
-	onPickTrapAnswerKeydown();
-	onPickTrapAnswerClick(trapAnswerA);
-	onPickTrapAnswerClick(trapAnswerB);
-	onPickTrapAnswerClick(trapAnswerC);
+	onPickTrapAnswerKeydown(layer);
+	onPickTrapAnswerClick(trapAnswerA, layer);
+	onPickTrapAnswerClick(trapAnswerB, layer);
+	onPickTrapAnswerClick(trapAnswerC, layer);
 
 //check if answer is correct or not
 	function checkIfTrueAnswer() {		
@@ -475,7 +541,6 @@ function setTrap() {
 			setTimeout (resetPacmanSpeed, 10000);
 			//console.log('true');
 		} else {
-			updateScore();
 			//slow pacMan down
 			pacManSpeed -=2;
 			//reset speed after 10 seconds
@@ -483,10 +548,10 @@ function setTrap() {
 			//console.log('false');
 		}
 	}
-}
-//score
-function updateScore() {
-	score += 10;
+	function hideLayer(layer) {		
+		//layer.hide();
+		layer.remove();
+	}
 }
 //draw game objects and animate
 drawField(fieldWalls);
@@ -498,7 +563,7 @@ var canvas = document.getElementById("canvas"),
 	guardians = creatGuardians(4, maxX, maxY),
 	pacManSpeed = 4;
 
-var pacMan = new PacMan(128,28, 'left', pacManSpeed);
+var pacMan = new PacMan(408,128, 'left', pacManSpeed);		//128, 28
 StartChangeDirectionListener(pacMan);
 
 function gameCicle()
@@ -510,14 +575,66 @@ function gameCicle()
 
     for (i = 0; i < guardians.length; i++) {
 		guardians[i].draw(ctx);
-		//guardians[i].move();
+		guardians[i].move();
 		guardians[i].detectWallCollision(maxX, maxY);
 	}
+	displayScore();
 }
 
 setInterval(function () {gameCicle();}, 40);
 
+function startGame() {								//TODO
+	updateHighScores();
+}
 
+function endGame() {								//TODO
+	var name = prompt('You scored: ' + score + '. Enter your name:') || 'Guest'; //better way?
+	sessionStorage.setItem(score, name);										//use localStorage instead of sessionStorage?
+    updateHighScores();
+}
+
+//score
+function updateScore() {
+	score += 10;
+	//console.log(score);
+}
+function displayScore() {
+	ctx.font = "20px Calibri";
+	ctx.textAlign = 'left';
+	ctx.fillStyle = "yellowgreen";
+	ctx.fillText("Score: " + score, 10, 430);
+	}
+//update high-score board
+function updateHighScores () {
+	var highScoreBoard = document.getElementById('high-score-board'),
+		highScoresCount = 10;
+//remove a child node to keep high-score board length lower than highScoresCount
+        while (highScoreBoard.firstChild) {
+            highScoreBoard.removeChild(highScoreBoard.firstChild);
+        }
+//sort sessionStorage
+		var sortedScores = [],
+			output;
+	
+		for (var prop in sessionStorage) {
+				if (sessionStorage.hasOwnProperty(prop) && !isNaN(prop)) {
+					sortedScores.push(prop);
+				}
+			}
+
+		sortedScores.sort(function (a, b) {
+				return b - a;
+			});
+//add first highScoresCount number of
+        for (i = 0; i < highScoresCount; i++) {
+            var highScore = sortedScores[i];
+            if (highScore && highScore !== undefined) {
+                var scoreListItem = document.createElement('li');
+                scoreListItem.innerText = sessionStorage[highScore] + ' : ' + highScore;	//sessionStorage[highScore] = name
+                highScoreBoard.appendChild(scoreListItem);
+            }
+        }
+    };
 //random functions
 
 function getRandomValue(min, max) {
@@ -621,4 +738,7 @@ createTooltipElement();
 // assign mouse over event to handler
 assignHandler();
 //Additional implementation to add close button on popup
+
 //setTrap();
+//endGame();
+//updateHighScores(); on game load

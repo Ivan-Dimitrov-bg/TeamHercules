@@ -2,7 +2,7 @@
     border-style:solid;
     border-width: 2px;
     background-color: black;
-    width: 1150px;
+    width: 955px;
     height:450px;
     position:absolute;
 }
@@ -22,17 +22,39 @@
 }
 
 canvas {
-position: absolute;
-z-index: 2;
-    width: 1150px;
+	position: absolute;
+	z-index: 2;
+    width: 960px;
     height:450px;
-border: 1px solid black;
+
 }
 
 #kinetic {
 	position: absolute;
 	z-index: 3;
-    width: 1150px;
+    width: 960px;
     height:450px;
-	border: 1px solid black;
 }
+#high-scores {
+	position:relative;
+	background-color: black;
+	vertical-align:top;
+	margin-left: 960px;
+	padding: 0 10px;
+	text-align: center;
+	height:450px;
+	min-width:250px;
+	border: 2px solid black;
+}
+	#high-scores ol {
+		text-align: left;
+		font-size: 18px;
+		color: yellowgreen;
+	}
+	#high-scores h1 {
+		font-size: 35px;
+		color: purple;
+		font-family: Calibri;
+		font-weight:normal;
+		font-variant:small-caps;
+	}
