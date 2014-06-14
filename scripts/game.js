@@ -1,4 +1,6 @@
 ﻿var fieldWalls = LevelsDesign[0].labyrinth;
+var allLetters = initializeFood(1);
+console.log(allLetters);
 
 var cellHeight = 50;
 var wallHeight = 6;
@@ -465,7 +467,9 @@ StartChangeDirectionListener(pacMan);
 
 function gameCicle()
 {
-     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
+    drawLetters(allLetters, ctx);
+    ctx.fillText(20, 20, "h");
      pacMan.draw();
      pacMan.move();
 
@@ -642,3 +646,4 @@ assignHandler();
 //endGame();
 //updateHighScores(); on game load
 //Additional implementation to add close button on popup
+
