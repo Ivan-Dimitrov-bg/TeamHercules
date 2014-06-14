@@ -729,6 +729,17 @@ function bubbleDeactivate(evt) {
     else { bubbleDeactivate === false }
 }
 
+
+    // make bubble VISIBLE
+    bubbleBox.style.visibility = "visible";
+}
+
+function bubbleDeactivate(evt) {
+    if (bubbleActivate == true)//additional check need TODO
+        bubbleBox.style.visibility = "hidden";
+    else { bubbleDeactivate === false }
+}
+
 // ------------------------------
 // initialization
 
@@ -742,3 +753,4 @@ assignHandler();
 //setTrap();
 //endGame();
 //updateHighScores(); on game load
+//Additional implementation to add close button on popup
