@@ -45,7 +45,7 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 				break;
 			case 'down':
 				this.y += this.speed;
-				break
+				break;
 			case 'left':
 				this.x += -this.speed;
 				break;
