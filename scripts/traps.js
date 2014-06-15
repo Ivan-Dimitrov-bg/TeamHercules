@@ -65,8 +65,8 @@ function setTrap() {
 		stage.add(layer);        
         var animate = new Kinetic.Tween({
             node: trapBubble,
-            duration: 2,
-            x: 70,
+            duration: 1,
+            x: 50,
             y: 50,
             strokeWidth: 7,
             scaleX: 1.2
@@ -98,7 +98,7 @@ function setTrap() {
 		stage.add(layer);        
         var animateText = new Kinetic.Tween({
             node: newText,
-            duration: 3,
+            duration: 1,
             strokeWidth: 14,
             scaleX: 1.1
         }, layer);
@@ -155,19 +155,19 @@ function setTrap() {
 			
 			if (ev.keyCode === 65) {
 				playerAnswer = keyChar;
-				checkIfTrueAnswer();
+				checkIfTrueAnswer(pacMan);
 				hideLayer(layer);
 				game.pause = false;
 			}
 			if (ev.keyCode === 66) {
 				playerAnswer = keyChar;
-				checkIfTrueAnswer();
+				checkIfTrueAnswer(pacMan);
 				hideLayer(layer);
                 game.pause = false;
 			}
 			if (ev.keyCode === 67) {
 				playerAnswer = keyChar;
-				checkIfTrueAnswer();
+				checkIfTrueAnswer(pacMan);
 				hideLayer(layer);
                 game.pause = false;
 			}
@@ -177,7 +177,7 @@ function setTrap() {
 	function onPickTrapAnswerClick (trapAnswer) {
 		trapAnswer.on('click', function() {
 			playerAnswer = this.id();
-			checkIfTrueAnswer();
+			checkIfTrueAnswer(pacMan);
 			hideLayer(layer);
 		});
 	}
@@ -187,24 +187,27 @@ function setTrap() {
 	onPickTrapAnswerClick(trapAnswerC, layer);
 
 //check if answer is correct or not
-	function checkIfTrueAnswer() {		
+	function checkIfTrueAnswer(pacMan) {		
 	    if (playerAnswer == trapsAll[randomTrapIndex]['correct']) {
+			clearTimeout();
 		    score += 100;
-			//make pacMan faster
-			//pacManSpeed += 2;								//TODO
+			pacMan.speed += 2;
 			//reset speed after 10 seconds
-			//setTimeout (resetPacmanSpeed, 10000);
-			//console.log('true');
+			setTimeout (function () {
+				pacMan.speed = pacManSpeed;
+			}, 10000);
+			game.pause = false;
 		} else {
-			//slow pacMan down
-			//pacManSpeed -=2;								//TODO
+			clearTimeout();
+			pacMan.speed -= 2;
 			//reset speed after 10 seconds
-			//setTimeout (resetPacmanSpeed, 10000);
-			//console.log('false');
+			setTimeout (function () {
+				pacMan.speed = pacManSpeed;
+			}, 10000);
+			game.pause = false;
 		}
 	}
-	function hideLayer(layer) {		
-		//layer.hide();
+	function hideLayer(layer) {
 		layer.remove();
 	}
 }

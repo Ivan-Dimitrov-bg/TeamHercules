@@ -14,6 +14,14 @@
 
 }
 
+#game text{
+  fill: purple;
+  font-size: 21px;
+  font-family: 'Book Antiqua', 'Bookman Old Style', Arial;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 #game #pacMan{
   fill:yellow;
   stroke: #000000;

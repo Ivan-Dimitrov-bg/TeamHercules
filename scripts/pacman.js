@@ -91,4 +91,3 @@ function PacMan(x,y,direction, speed) {
 
 
 }
-
