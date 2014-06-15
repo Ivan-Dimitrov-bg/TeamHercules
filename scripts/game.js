@@ -179,7 +179,6 @@ function gameCicle()
         pacMan.draw();
         pacMan.move();
 
-
         for (i = 0; i < guardians.length; i++) {
             guardians[i].draw(ctx);
             guardians[i].move();
@@ -292,5 +291,4 @@ function randomDirection() {
 return direction;	
 
 }
-//endGame();
 //updateHighScores(); on game load

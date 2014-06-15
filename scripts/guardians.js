@@ -45,7 +45,7 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 				break;
 			case 'down':
 				this.y += this.speed;
-				break
+				break;
 			case 'left':
 				this.x += -this.speed;
 				break;
@@ -74,19 +74,7 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 		 if (this.y > maxY - this.radius) {
 			this.direction = "up";
 		 }
-	    //adding here Tsonko
-		 for (var set = 0; set < fieldWalls.lenght; set++) {
-		     if (fieldWalls[set] === "-") {
-		         this.direction = "up";
-		     }
-
-		     if ((fieldWalls[set] === "|")) {
-		         this.direction = "left";
-		     }
-		     if ((fieldWalls[set] === "|")) {
-		         this.direction = "left";
-		     }
-		 }
+	    //adding here 
 	};
 	
 	this.detectCollisionWithPacman = function (pacMan) {

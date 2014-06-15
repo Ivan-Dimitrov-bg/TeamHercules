@@ -64,8 +64,8 @@ function PacMan(x,y,direction, speed) {
         if (detectCollisionsWithWalls(direction, this.positionX, this.positionY)) {
             collisionDetected = true;
         }
-		
-		 //detectCollisionsWithFood
+
+        //detectCollisionsWithFood
         for (var i = 0; i < allLetters.length; i++) {
             var letter = allLetters[i];
             var dX = this.positionX - letter.x;
@@ -84,11 +84,10 @@ function PacMan(x,y,direction, speed) {
                 }
                 allLetters.splice(i, 1);
             }
-        }
-
-
+        }   
 
         return collisionDetected;
-
     };
+
+
 }
