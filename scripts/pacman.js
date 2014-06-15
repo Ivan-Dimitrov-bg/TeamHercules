@@ -64,22 +64,31 @@ function PacMan(x,y,direction, speed) {
         if (detectCollisionsWithWalls(direction, this.positionX, this.positionY)) {
             collisionDetected = true;
         }
-		if (detectCollisionsWithFood()) {		//TODO
-			updateScore();
-		}
-		if (detectCollisionsWithTrap()) {		//TODO
-		//pause game
-			setTrap();
-		//resume game
-		}
+		
+		 //detectCollisionsWithFood
+        for (var i = 0; i < allLetters.length; i++) {
+            var letter = allLetters[i];
+            var dX = this.positionX - letter.x;
+            if (dX < 0) {
+                dX *= -1;
+            }
+            var dY = this.positionY - letter.y;
+            if (dY < 0) {
+                dY *= -1;
+            }
+            if (dX + dY < this.r*2/3) {
+                score += 10;
+                if (letter.letter == '{') {
+                    setTrap();
+                    game.pause = true;
+                }
+                allLetters.splice(i, 1);
+            }
+        }
+
+
 
         return collisionDetected;
 
     };
-}
-function detectCollisionsWithFood() {		//TODO
-	return false;
-}
-function detectCollisionsWithTrap() {		//TODO
-	return false;
 }

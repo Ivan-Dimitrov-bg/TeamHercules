@@ -1,14 +1,23 @@
 ﻿var fieldWalls = LevelsDesign[0].labyrinth;
+var allLetters = initializeFood(1);
+
 
 var cellHeight = 50;
 var wallHeight = 6;
 var level = 0;
 var score = 0;
+var lives = 3;
 
 function Game() {
 
-    this.pause = true;   
+    this.pause = true;
+    this.level = 1;
 }
+
+var game = new Game();
+game.pause = false;
+
+
 //maze
 function drawField(fieldWalls) {
 
@@ -38,6 +47,17 @@ function drawField(fieldWalls) {
             }
          }
     }
+	var sign = document.createElementNS(svgNS, 'text');
+	sign.setAttribute('x', 412);
+	sign.setAttribute('y', 190);
+	sign.innerHTML = 'JavaScript <tspan x="432" y="230">Museum</tspan>';
+	document.getElementById('game').appendChild(sign);
+	
+	var levelSign = document.createElementNS(svgNS, 'text');
+	levelSign.setAttribute('x', 18);
+	levelSign.setAttribute('y', 85);
+	levelSign.innerHTML = 'level <tspan x="22" y="130">1</tspan>';
+	document.getElementById('game').appendChild(levelSign);
 }
 
 function detectCollisionsWithWalls(direction, posX, posY) {
@@ -113,10 +133,6 @@ function StartChangeDirectionListener(objectToControl) {
     }
 }
 
-function resetPacmanSpeed () {
-	pacManSpeed = 4;				//TODO - more abstract
-}
-
 function creatGuardians(guardiansCount, maxX, maxY) {
     guardians = [],
 	guardiansPositions = [{'x': 30, y: 30},						//TODO - fix initial coordinates when the maze is final
@@ -156,18 +172,23 @@ StartChangeDirectionListener(pacMan);
 
 function gameCicle()
 {
-     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
-     pacMan.draw();
-     pacMan.move();
+    if (game.pause === false) {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
+        drawLetters(allLetters, ctx);
+        ctx.fillText(20, 20, "h");
+        pacMan.draw();
+        pacMan.move();
 
-    for (i = 0; i < guardians.length; i++) {
-		guardians[i].draw(ctx);
-		guardians[i].move();
-		guardians[i].detectWallCollision(maxX, maxY);
-	}
-	displayScore();
+
+        for (i = 0; i < guardians.length; i++) {
+            guardians[i].draw(ctx);
+            guardians[i].move();
+            guardians[i].detectWallCollision(maxX, maxY);
+			guardians[i].detectCollisionWithPacman(pacMan);
+        }
+        displayScore();
+    }
 }
-
 setInterval(function () {gameCicle();}, 40);
 
 function startGame() {								//TODO
@@ -175,21 +196,30 @@ function startGame() {								//TODO
 }
 
 function endGame() {								//TODO
-	var name = prompt('You scored: ' + score + '. Enter your name:') || 'Guest'; //better way?
+	game.pause = true;
+	var name = prompt('GAME OVER! \n Your brain expanded with: ' + score + '. Enter your name:') || 'Guest'; //better way?
 	sessionStorage.setItem(score, name);										//use localStorage instead of sessionStorage?
     updateHighScores();
 }
-
-//score
-function updateScore() {
-	score += 10;
-	//console.log(score);
+function loseLife() {								//TODO
+	game.pause = true;
+	lives--;
+	setTimeout(function () {
+		resetPacManOnLostLife(pacMan);
+		game.pause = false;
+	}, 2000);
 }
+function resetPacManOnLostLife(pacMan) {
+	pacMan.positionX = 408;
+	pacMan.positionY = 128;
+	pacMan.direction = 'left';
+}
+//score
 function displayScore() {
 	ctx.font = "20px Calibri";
 	ctx.textAlign = 'left';
 	ctx.fillStyle = "yellowgreen";
-	ctx.fillText("Score: " + score, 10, 430);
+	ctx.fillText("Brain expansion: " + score, 10, 430);
 	}
 //update high-score board
 function updateHighScores () {
@@ -200,8 +230,7 @@ function updateHighScores () {
             highScoreBoard.removeChild(highScoreBoard.firstChild);
         }
 //sort sessionStorage
-		var sortedScores = [],
-			output;
+		var sortedScores = [];
 	
 		for (var prop in sessionStorage) {
 				if (sessionStorage.hasOwnProperty(prop) && !isNaN(prop)) {
@@ -263,74 +292,5 @@ function randomDirection() {
 return direction;	
 
 }
-//added function for popup box /Tsonko
-var bubbleBox;
-function createTooltipElement() {
-    // create balloon element to display info
-    bubbleBox = document.createElement("div");
-    bubbleBox = document.createElement("input");
-    // set style
-    bubbleBox.style.visibility = "hidden"; // < make it hidden till mouse over
-    bubbleBox.style.position = "fixed";
-    bubbleBox.style.width = "150px";
-    bubbleBox.style.textAlign = "center";
-    //bubbleBox.style.top="1ex";
-    //bubbleBox.style.left="1ex";
-    bubbleBox.style.borderRadius = "30px";
-    bubbleBox.style.backgroundColor = "silver";
-
-    // insert into DOM
-    bubbleBox.appendChild(document.createTextNode("empty space"));
-    document.body.insertBefore(bubbleBox, document.body.lastChild);
-}
-
-function assignHandler() {
-    var hoverEle = document.getElementById("popup");//TODO attach here instead of popup 
-    //collisionDetected for Packman and Guardian/or trap
-    // assign handler
-    //hoverEle.addEventListener("click", bubbleActivate , false);
-    hoverEle.addEventListener('click', bubbleActivate, false);
-    hoverEle.addEventListener("click", bubbleDeactivate, false);
-}
-
-function bubbleActivate(evt) {
-
-    // get the position of the hover element
-    var boundBox = evt.target.getBoundingClientRect();
-    var coordX = boundBox.left;
-    var coordY = boundBox.top;
-
-    // adjust bubble position
-    bubbleBox.style.left = (coordX + 40).toString() + "px";
-    bubbleBox.style.top = (coordY + 40).toString() + "px";
-
-    // add bubble content. Can be any HTML
-    bubbleBox.innerHTML = "<span style='font-size:32px;color:red'>" + "Place text content" + "</span>";
-
-    // make bubble VISIBLE
-    bubbleBox.style.visibility = "visible";
-}
-
-function bubbleDeactivate(evt) {
-    if (bubbleActivate == true)//additional check need TODO
-        bubbleBox.style.visibility = "hidden";
-    else { bubbleDeactivate === false }
-}
-
-
-
-
-// ------------------------------
-// initialization
-
-// create the element
-createTooltipElement();
-
-// assign mouse over event to handler
-assignHandler();
-//Additional implementation to add close button on popup
-
-//setTrap();
 //endGame();
 //updateHighScores(); on game load
-//Additional implementation to add close button on popup

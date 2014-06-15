@@ -88,6 +88,18 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 		     }
 		 }
 	};
+	
+	this.detectCollisionWithPacman = function (pacMan) {
+	
+		if (!(pacMan.positionX > this.x + this.radius || pacMan.positionX + pacMan.r < this.x || 
+					pacMan.positionY > this.y + this.radius || pacMan.positionY + pacMan.r < this.y)) {
+			if (lives > 1) {
+				loseLife();
+			} else {
+				endGame();
+			}
+		}
+	};
 }
 
 function changeGuardianDirection() {		//TODO
