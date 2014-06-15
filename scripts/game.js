@@ -275,71 +275,7 @@ function randomDirection() {
 return direction;	
 
 }
-//added function for popup box /Tsonko
-var bubbleBox;
-function createTooltipElement() {
-    // create balloon element to display info
-    bubbleBox = document.createElement("div");
-    bubbleBox = document.createElement("input");
-    // set style
-    bubbleBox.style.visibility = "hidden"; // < make it hidden till mouse over
-    bubbleBox.style.position = "fixed";
-    bubbleBox.style.width = "150px";
-    bubbleBox.style.textAlign = "center";
-    //bubbleBox.style.top="1ex";
-    //bubbleBox.style.left="1ex";
-    bubbleBox.style.borderRadius = "30px";
-    bubbleBox.style.backgroundColor = "silver";
 
-    // insert into DOM
-    bubbleBox.appendChild(document.createTextNode("empty space"));
-    document.body.insertBefore(bubbleBox, document.body.lastChild);
-}
-
-function assignHandler() {
-    var hoverEle = document.getElementById("popup");//TODO attach here instead of popup 
-    //collisionDetected for Packman and Guardian/or trap
-    // assign handler
-    //hoverEle.addEventListener("click", bubbleActivate , false);
-    hoverEle.addEventListener('click', bubbleActivate, false);
-    hoverEle.addEventListener("click", bubbleDeactivate, false);
-}
-
-function bubbleActivate(evt) {
-
-    // get the position of the hover element
-    var boundBox = evt.target.getBoundingClientRect();
-    var coordX = boundBox.left;
-    var coordY = boundBox.top;
-
-    // adjust bubble position
-    bubbleBox.style.left = (coordX + 40).toString() + "px";
-    bubbleBox.style.top = (coordY + 40).toString() + "px";
-
-    // add bubble content. Can be any HTML
-    bubbleBox.innerHTML = "<span style='font-size:32px;color:red'>" + "Place text content" + "</span>";
-
-    // make bubble VISIBLE
-    bubbleBox.style.visibility = "visible";
-}
-
-function bubbleDeactivate(evt) {
-    if (bubbleActivate == true)//additional check need TODO
-        bubbleBox.style.visibility = "hidden";
-    else { bubbleDeactivate === false }
-}
-
-
-
-
-// ------------------------------
-// initialization
-
-// create the element
-createTooltipElement();
-
-// assign mouse over event to handler
-assignHandler();
 //Additional implementation to add close button on popup
 
 //setTrap();
