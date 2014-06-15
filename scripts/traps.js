@@ -55,11 +55,24 @@ function setTrap() {
 			width: stage.width() * 0.75,
 			height: stage.height() * 0.75,
 			fill: 'black',
-			stroke: 'purple',
+			stroke: 'aqua',
 			strokeWidth: 4,
-			cornerRadius: 10
+			cornerRadius: 10,
+			dash: [103, 3]
 		  });	
 		layer.add(trapBubble);
+		//add animation
+		stage.add(layer);        
+        var animate = new Kinetic.Tween({
+            node: trapBubble,
+            duration: 4,
+            x: 70,
+            y: 50,
+            strokeWidth: 14,
+            scaleX: 1.2
+        }, layer);
+
+        animate.play();
 		return trapBubble;
 	}
 	
@@ -70,14 +83,27 @@ function setTrap() {
 			text: text,
 			fontSize: fontSize,
 			fontFamily: 'Calibri',
+			fontStyle:"900",
 			fill: fillColor,
 			width: width,
 			padding: padding,
 			align: 'center',
 			id: letter,
+			shadowColor: 'white',
+			shadowBlur: 10,
+			shadowOffset: {x:5,y:3}
 		});
 		newText.offsetX(newText.width()/2);		//center
 		layer.add(newText);
+		stage.add(layer);        
+        var animateText = new Kinetic.Tween({
+            node: newText,
+            duration: 5,
+            strokeWidth: 14,
+            scaleX: 1.1
+        }, layer);
+
+        animateText.play();
 		return newText;
 	}
 //draw	
@@ -106,7 +132,7 @@ function setTrap() {
 	text = 'a) ' + trapsAll[randomTrapIndex]['a'];
 	textWidth = trapBubble.width() / 3;
 	
-	var trapAnswerA = drawText(text, layer, x, y, 'yellowgreen', 22, 2, textWidth, 'a');
+	var trapAnswerA = drawText(text, layer, x-20, y, 'yellowgreen', 22, 2, textWidth, 'a');
 //b	
 	x = trapBubble.x() + trapBubble.width() / 2;
 	text = 'b) ' + trapsAll[randomTrapIndex]['b'];
@@ -116,7 +142,7 @@ function setTrap() {
 	x = trapBubble.x() + trapBubble.width() / 2 + trapBubble.width() / 3;
 	text = 'c) ' + trapsAll[randomTrapIndex]['c'];
 	
-	var trapAnswerC = drawText(text, layer, x, y, 'yellowgreen', 22, 2, textWidth, 'c');
+	var trapAnswerC = drawText(text, layer, x+20, y, 'yellowgreen', 22, 2, textWidth, 'c');
 //add layer to stage
 	stage.add(layer);
 	
