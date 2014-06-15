@@ -89,5 +89,57 @@ function PacMan(x,y,direction, speed) {
         return collisionDetected;
     };
 
+    function detectCollisionsWithWalls(direction, posX, posY) {
 
+	var currRow = ~~(posY / cellHeight);
+	var currCol = ~~(posX / cellHeight);
+
+	if (direction === 'left' || direction === 'right') {
+
+	   	if(posY % cellHeight !== (cellHeight + wallHeight) / 2)
+	   	{
+	   		return true;
+	   	}
+               
+	   	//if move to left and hit wall
+	   	if (direction === 'left')
+	   	{
+	   		if (fieldWalls[currRow * 2 + 1][currCol] === '|' && (posX % cellHeight <= (cellHeight + wallHeight) / 2)) {
+	   			return true;
+	   		}
+	   	}
+	   	//if move to right and hit wall
+	   	else if (direction === 'right') {
+	   		if (fieldWalls[currRow * 2 + 1][currCol + 1] === '|' && (posX % cellHeight >= (cellHeight + wallHeight) / 2)) {
+	   			return true;
+	   		}
+	   	}
+
+	   	return false;
+	 }
+
+	if (direction === 'up' || direction === 'down') {
+
+		if(posX % cellHeight !== (cellHeight + wallHeight) / 2)
+		{
+			return true;
+		}
+
+		//if moves up and hit wall
+		if (direction === 'up')
+		{
+			if (fieldWalls[currRow * 2][currCol] === '-' && (posY % cellHeight <= (cellHeight + wallHeight) / 2)) {
+				return true;
+			}
+		}
+		//if moves down and hit wall
+		else if (direction === 'down') {
+			if (fieldWalls[currRow*2+2][currCol] === '-' && (posY % cellHeight >= (cellHeight + wallHeight) / 2)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
 }

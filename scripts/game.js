@@ -60,59 +60,6 @@ function drawField(fieldWalls) {
 	document.getElementById('game').appendChild(levelSign);
 }
 
-function detectCollisionsWithWalls(direction, posX, posY) {
-
-		var currRow = ~~(posY / cellHeight);
-		var currCol = ~~(posX / cellHeight);
-
-		if (direction === 'left' || direction === 'right') {
-
-		if(posY % cellHeight !== (cellHeight + wallHeight) / 2)
-		{
-			return true;
-		}
-
-		//if move to left and hit wall
-		if (direction === 'left')
-		{
-			if (fieldWalls[currRow * 2 + 1][currCol] === '|' && (posX % cellHeight <= (cellHeight + wallHeight) / 2)) {
-				return true;
-			}
-		}
-		//if move to right and hit wall
-		else if (direction === 'right') {
-			if (fieldWalls[currRow * 2 + 1][currCol + 1] === '|' && (posX % cellHeight >= (cellHeight + wallHeight) / 2)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	if (direction === 'up' || direction === 'down') {
-
-		if(posX % cellHeight !== (cellHeight + wallHeight) / 2)
-		{
-			return true;
-		}
-
-		//if moves up and hit wall
-		if (direction === 'up')
-		{
-			if (fieldWalls[currRow * 2][currCol] === '-' && (posY % cellHeight <= (cellHeight + wallHeight) / 2)) {
-				return true;
-			}
-		}
-		//if moves down and hit wall
-		else if (direction === 'down') {
-			if (fieldWalls[currRow*2+2][currCol] === '-' && (posY % cellHeight >= (cellHeight + wallHeight) / 2)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-}
 
 function StartChangeDirectionListener(objectToControl) {
     document.onkeydown = khandle;
@@ -135,21 +82,21 @@ function StartChangeDirectionListener(objectToControl) {
 
 function creatGuardians(guardiansCount, maxX, maxY) {
     guardians = [],
-	guardiansPositions = [{'x': 30, y: 30},						//TODO - fix initial coordinates when the maze is final
-					{'x': maxX - 30, y: 30},
-					{'x': 30, y: maxY - 70},
-					{'x': maxX - 30, y: maxY - 70}	
+	guardiansPositions = [{row: 0, col: 0},						//TODO - fix initial coordinates when the maze is final
+					{row:7, col: 0},
+					{row: 0, col: 18},
+					{row: 7, col: 18}	
 ];
 
-    for (i = 0; i < guardiansCount; i++) {
-    	var x = guardiansPositions[i].x,
-    		y = guardiansPositions[i].y,
+    for (i = 0; i < guardiansPositions.length; i++) {
+    	var x = guardiansPositions[i].col*50 + (cellHeight + wallHeight) / 2,
+    		y = guardiansPositions[i].row*50 + (cellHeight + wallHeight) / 2,
     		radius = 15,
 			guardianSpeed = 3
     		direction = randomDirection();						//TODO - change direction eventually
     		//fillColor = getRandomColor();
     				
-    	var guardian = new Guardian(x, y, radius, guardianSpeed, direction, 'black', 'yellowgreen');
+    	var guardian = new Guardian(x, y, radius, guardianSpeed, 'right', 'black', 'yellowgreen');
     
     	guardians.push(guardian);
     }
@@ -182,7 +129,6 @@ function gameCicle()
         for (i = 0; i < guardians.length; i++) {
             guardians[i].draw(ctx);
             guardians[i].move();
-            guardians[i].detectWallCollision(maxX, maxY);
 			guardians[i].detectCollisionWithPacman(pacMan);
         }
         displayScore();
