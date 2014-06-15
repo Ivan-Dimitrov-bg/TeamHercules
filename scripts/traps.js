@@ -58,17 +58,17 @@ function setTrap() {
 			stroke: 'aqua',
 			strokeWidth: 4,
 			cornerRadius: 10,
-			dash: [103, 3]
+			dash: [103, 1]
 		  });	
 		layer.add(trapBubble);
 		//add animation
 		stage.add(layer);        
         var animate = new Kinetic.Tween({
             node: trapBubble,
-            duration: 4,
+            duration: 2,
             x: 70,
             y: 50,
-            strokeWidth: 14,
+            strokeWidth: 7,
             scaleX: 1.2
         }, layer);
 
@@ -90,15 +90,15 @@ function setTrap() {
 			align: 'center',
 			id: letter,
 			shadowColor: 'white',
-			shadowBlur: 10,
-			shadowOffset: {x:5,y:3}
+			shadowBlur: 18,
+			shadowOffset: {x:1,y:2}
 		});
 		newText.offsetX(newText.width()/2);		//center
 		layer.add(newText);
 		stage.add(layer);        
         var animateText = new Kinetic.Tween({
             node: newText,
-            duration: 5,
+            duration: 3,
             strokeWidth: 14,
             scaleX: 1.1
         }, layer);
