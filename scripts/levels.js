@@ -67,6 +67,13 @@ var level1 = {
 	[708, 283, 'h', 'var arr = [1, 2, 3]'],
 	[877, 300, 'v', 'push'],
 	[927, 307, 'v', 'pop()']
+    ],
+
+    guardiansPositions : [
+        {row: 0, col: 0},
+		{row:7, col: 0},
+		{row: 0, col: 18},
+		{row: 7, col: 18}	
     ]
 };
 
@@ -130,5 +137,7 @@ function drawLetters(allLettersWithPositions,ctx) {
 
     }
 }
+
+
 
 

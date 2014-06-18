@@ -157,3 +157,30 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 		}
 	};
 }
+
+function creatGuardians(guardiansPositions) {
+    var guardians = [];
+
+
+    for (i = 0; i < guardiansPositions.length; i++) {
+        var x = guardiansPositions[i].col * 50 + (cellHeight + wallHeight) / 2,
+    		y = guardiansPositions[i].row * 50 + (cellHeight + wallHeight) / 2,
+    		radius = 15,
+			guardianSpeed = 3;
+    				
+    	var guardian = new Guardian(x, y, radius, guardianSpeed, 'right', 'black', 'yellowgreen');
+    
+    	guardians.push(guardian);
+    }
+
+    return guardians;
+}
+
+
+function resetGuardians(guardians, positions) {
+
+    for (var i = 0; i < guardians.length; i++) {
+        guardians[i].x = positions[i].col * 50 + (cellHeight + wallHeight) / 2;
+    	guardians[i].y = positions[i].row * 50 + (cellHeight + wallHeight) / 2;
+    }
+}

@@ -3,18 +3,18 @@
 	maxX = ctx.canvas.width,
 	maxY = ctx.canvas.height;
 
-var fieldWalls = LevelsDesign[0].labyrinth,
-	allLetters = initializeFood(1),
-	cellHeight = 50,
-	wallHeight = 6;
-
 var level = 0,
 	score = 0,
 	lives = 3,
 	newGame = false;
+
+var fieldWalls = LevelsDesign[level].labyrinth,
+	allLetters = initializeFood(1),
+	cellHeight = 50,
+	wallHeight = 6;
 	
 
-var	guardians = creatGuardians(4, maxX, maxY),
+var	guardians = creatGuardians(LevelsDesign[level].guardiansPositions),
 	pacManSpeed = 4,
 	pacMan = new PacMan(408,128, 'left', pacManSpeed);
 	
@@ -183,36 +183,14 @@ function StartChangeDirectionListener(objectToControl) {
     }
 }
 
-function creatGuardians(guardiansCount, maxX, maxY) {
-    guardians = [],
 
-	guardiansPositions = [{row: 0, col: 0},
-					{row:7, col: 0},
-					{row: 0, col: 18},
-					{row: 7, col: 18}	
-];
-
-    for (i = 0; i < guardiansPositions.length; i++) {
-    	var x = guardiansPositions[i].col*50 + (cellHeight + wallHeight) / 2,
-    		y = guardiansPositions[i].row*50 + (cellHeight + wallHeight) / 2,
-    		radius = 15,
-			guardianSpeed = 3
-    		direction = randomDirection();						//TODO - change direction eventually
-    				
-    	var guardian = new Guardian(x, y, radius, guardianSpeed, 'right', 'black', 'yellowgreen');
-    
-    	guardians.push(guardian);
-    }
-
-    return guardians;
-}
 
 function gameCicle()
 {
     if (game.pause === false) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
         drawLetters(allLetters, ctx);
-        ctx.fillText(20, 20, "h");
+
         pacMan.draw();
         pacMan.move();
 
@@ -225,7 +203,8 @@ function gameCicle()
 		displayLives(lives);
     }
 }
-	setInterval(function () {gameCicle();}, 40);
+
+setInterval(function () { gameCicle(); }, 40);
 
 function startGame(game) {								//TODO
 	updateHighScores();
@@ -252,15 +231,10 @@ function loseLife() {
 	game.pause = true;
 	lives--;
 	setTimeout(function () {
-		resetPacMan(pacMan);
+	    resetPacMan(pacMan);
+        resetGuardians(guardians,LevelsDesign[level].guardiansPositions);
 		game.pause = false;
 	}, 2000);
-}
-function resetPacMan(pacMan) {
-	pacMan.positionX = 408;
-	pacMan.positionY = 128;
-	pacMan.wantedDirection = 'left';
-	pacMan.speed = pacManSpeed;
 }
 
 function displayLives(lives) {
