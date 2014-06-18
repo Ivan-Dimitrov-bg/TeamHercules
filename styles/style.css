@@ -72,54 +72,46 @@ canvas {
 	height:455px;
 	border-bottom: 2px solid purple;
 }
-#game-section button {
-	background-color:black;
-	border: 0;
-	color:grey;
-	font-size:16px;
-	position:absolute;
-	top:467px;
-	z-index:3;
-}
-#game-section button:hover {
-	text-decoration:underline;
-	cursor:pointer;
-}
-#game-section button:focus{
-	outline:0;
-}
-#game-section #start-game {
-	background-color:black;
-	border: 2px solid black;
-	border-radius:10px;
-	color:yellowgreen;
-	padding:7px;
-	font-size:18px;
-	font-weight:bold;
-	left:837px;
-	z-index:3;
-}
-#game-section button#start-game:hover{
-	border: 2px solid yellowgreen;
-	text-decoration:none;
-}
+	#game-section button {
+		background-color:black;
+		border: 0;
+		color:grey;
+		font-size:16px;
+		position:absolute;
+		top:467px;
+		z-index:3;
+	}
+		#game-section button:hover {
+			text-decoration:underline;
+			cursor:pointer;
+		}
+		#game-section button:focus{
+			outline:0;
+		}
+	#game-section #start-game {
+		background-color:black;
+		border: 2px solid black;
+		border-radius:10px;
+		color:yellowgreen;
+		padding:7px;
+		font-size:18px;
+		font-weight:bold;
+		left:837px;
+		z-index:3;
+	}
+		#game-section button#start-game:hover{
+			border: 2px solid yellowgreen;
+			text-decoration:none;
+		}
 
-#game-section #tips-btn {
-	top:477px;
-	left:730px;
-}
-#game-section #story-btn {
-	top:477px;
-	left:780px;
-}
-.close {
-    float:right;
-	top:0;
-    padding:2px 5px;
-	z-index:4;
-	font-size:30px;
-	cursor:pointer;
-}
+	#game-section #tips-btn {
+		top:477px;
+		left:730px;
+	}
+	#game-section #story-btn {
+		top:477px;
+		left:780px;
+	}
 #high-scores {
 	position:relative;
 	background-color: black;
@@ -173,18 +165,20 @@ canvas {
  	text-indent:20px;
 	padding:3px 0;
  }
-/* #tips {
-	color: #a0a0a0;
-}	
-#game-story {
-	color: #a0a0a0;
-	padding:10px;
+ .close {
+    float:right;
+	top:0;
+    padding:2px 5px;
+	z-index:4;
+	font-size:30px;
+	cursor:pointer;
 }
-	#game-story p {
-		text-align:justify;
-		border-top: 2px solid purple;
-		border-bottom: 2px solid purple;
-	} */
+.italic {
+font-style:italic;
+}
+.hidden {
+display:none;
+}
 footer {
 padding:10px;
 color:grey;
@@ -192,9 +186,3 @@ color:grey;
 	footer #credit {
 	float:right;
 	}
-.italic {
-font-style:italic;
-}
-.hidden {
-display:none;
-}

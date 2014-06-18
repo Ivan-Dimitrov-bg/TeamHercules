@@ -53,21 +53,23 @@ window.addEventListener('keydown', function (e) {
 }, false);
 var startBtn = document.getElementById('start-game');
 	startBtn.addEventListener('click', function () {
-	if (newGame == false) {
-		startGame(game);
-		}
-	});
+		if (newGame == false) {
+			startGame(game);
+			}
+		});
 //start page
 var tips = document.getElementById('tips'),
 	tipsBtn = document.getElementById('tips-btn');
 	tipsBtn.addEventListener('click', function () {
 		if (tips.classList.contains('hidden')) {
 			tips.classList.remove('hidden');
+			
 			if (newGame) {
 				game.pause = true;
 			}
 		} else {
 			tips.classList.add('hidden');			
+			
 			if (newGame) {
 				game.pause = false;
 			}
@@ -77,6 +79,7 @@ var tips = document.getElementById('tips'),
 var closeTips = document.getElementById('closeTips');
 	closeTips.addEventListener('click', function () {
 		tips.classList.add('hidden');
+		
 		if (newGame) {
 			game.pause = false;
 		}
@@ -101,6 +104,7 @@ var gameStory = document.getElementById('game-story'),
 var closeStory = document.getElementById('closeStory');
 	closeStory.addEventListener('click', function () {
 		gameStory.classList.add('hidden');
+		
 		if (newGame) {
 			game.pause = false;
 		}
