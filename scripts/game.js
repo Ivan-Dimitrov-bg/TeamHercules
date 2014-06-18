@@ -105,9 +105,14 @@ function drawField(fieldWalls) {
 	levelSign.setAttribute('y', 85);
 	levelSign.innerHTML = 'level <tspan x="22" y="130">1</tspan>';
 	document.getElementById('game').appendChild(levelSign);
+<<<<<<< HEAD
 
 
 }
+=======
+}
+
+>>>>>>> f671ba28916c6bec95eebe998185f1cddab05c6d
 
 
 function StartChangeDirectionListener(objectToControl) {
@@ -135,7 +140,11 @@ function StartChangeDirectionListener(objectToControl) {
 
 function creatGuardians(guardiansCount, maxX, maxY) {
     guardians = [],
+<<<<<<< HEAD
 	guardiansPositions = [{row: 0, col: 0},
+=======
+	guardiansPositions = [{row: 0, col: 0},						//TODO - fix initial coordinates when the maze is final
+>>>>>>> f671ba28916c6bec95eebe998185f1cddab05c6d
 					{row:7, col: 0},
 					{row: 0, col: 18},
 					{row: 7, col: 18}	
