@@ -106,10 +106,7 @@ function drawField(fieldWalls) {
 	levelSign.innerHTML = 'level <tspan x="22" y="130">1</tspan>';
 	document.getElementById('game').appendChild(levelSign);
 
-
 }
-
-
 function StartChangeDirectionListener(objectToControl) {
     document.onkeydown = khandle;
      
