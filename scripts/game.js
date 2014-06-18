@@ -107,6 +107,7 @@ function drawField(fieldWalls) {
 	document.getElementById('game').appendChild(levelSign);
 
 }
+
 function StartChangeDirectionListener(objectToControl) {
     document.onkeydown = khandle;
      
@@ -132,6 +133,7 @@ function StartChangeDirectionListener(objectToControl) {
 
 function creatGuardians(guardiansCount, maxX, maxY) {
     guardians = [],
+
 	guardiansPositions = [{row: 0, col: 0},
 					{row:7, col: 0},
 					{row: 0, col: 18},
