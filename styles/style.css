@@ -68,7 +68,27 @@ canvas {
     width: 960px;
     height:450px;
 }
-#start-game {
+#game-section {
+	height:455px;
+	border-bottom: 2px solid purple;
+}
+#game-section button {
+	background-color:black;
+	border: 0;
+	color:grey;
+	font-size:16px;
+	position:absolute;
+	top:467px;
+	z-index:3;
+}
+#game-section button:hover {
+	text-decoration:underline;
+	cursor:pointer;
+}
+#game-section button:focus{
+	outline:0;
+}
+#game-section #start-game {
 	background-color:black;
 	border: 2px solid black;
 	border-radius:10px;
@@ -76,21 +96,29 @@ canvas {
 	padding:7px;
 	font-size:18px;
 	font-weight:bold;
-	position:absolute;
-	top:467px;
 	left:837px;
 	z-index:3;
 }
-#game-section button:hover{
+#game-section button#start-game:hover{
 	border: 2px solid yellowgreen;
+	text-decoration:none;
+}
+
+#game-section #tips-btn {
+	top:477px;
+	left:730px;
+}
+#game-section #story-btn {
+	top:477px;
+	left:780px;
+}
+.close {
+    float:right;
+	top:0;
+    padding:2px 5px;
+	z-index:4;
+	font-size:30px;
 	cursor:pointer;
-}
-#game-section button:focus{
-	outline:0;
-}
-#game-section {
-	height:455px;
-	border-bottom: 2px solid purple;
 }
 #high-scores {
 	position:relative;
@@ -115,24 +143,58 @@ canvas {
 		font-weight:normal;
 		font-variant:small-caps;
 	}
+ #tips,
+ #game-story{
+	color: black;
+	position:absolute;
+	padding:10px;
+	width:700px;
+	border: 2px solid yellowgreen;
+	border-radius:10px;
+	background: yellowgreen;
+	text-align:justify;
+	z-index:3;
 	
-#about-the-game {
+}	
+#tips {
+	top:185px;
+	left:100px;
+
+}
+ #game-story{
+ 	padding:20px;
+	padding-top:10px;
+	width:800px;
+	top:75px;
+	left:55px;
+
+ }	
+ #game-story  p{
+ 	text-indent:20px;
+	padding:3px 0;
+ }
+/* #tips {
+	color: #a0a0a0;
+}	
+#game-story {
 	color: #a0a0a0;
 	padding:10px;
 }
-	#about-the-game p {
+	#game-story p {
 		text-align:justify;
 		border-top: 2px solid purple;
 		border-bottom: 2px solid purple;
-	}
+	} */
 footer {
 padding:10px;
 color:grey;
 }
 	footer #credit {
-	text-align:right;
-	right:0;
+	float:right;
 	}
 .italic {
 font-style:italic;
+}
+.hidden {
+display:none;
 }
