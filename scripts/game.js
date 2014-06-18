@@ -41,13 +41,13 @@ var game = new Game();
 //start-pause-unpause on space key down
 window.addEventListener('keydown', function (e) {
 	if (e.keyCode == 32 && newGame == false) {
-		//e.preventDefault();
+		e.preventDefault();
 		startGame(game);		
 	} else if (e.keyCode == 32 && newGame && game.pause == false) {
-		//e.preventDefault();
+		e.preventDefault();
 		game.pause = true;
 	} else if (e.keyCode == 32 && newGame && game.pause) {
-		//e.preventDefault();
+		e.preventDefault();
 		game.pause = false;
 	}
 }, false);
