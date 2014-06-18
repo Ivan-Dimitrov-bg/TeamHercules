@@ -6,6 +6,9 @@ function PacMan(x,y,direction, speed) {
     this.wantedDirection = direction;
     this.pause = false;
     this.r = 20;
+	this.frame = 0;
+    this.imageObj = new Image();
+    this.imageObj.src = 'pacman sprite.png';
 
     this.draw = function () {
         //remove old pac man
@@ -15,15 +18,33 @@ function PacMan(x,y,direction, speed) {
         }
 
         var svgNS = 'http://www.w3.org/2000/svg';
-        var pacCicle = document.createElementNS(svgNS, 'circle');
+        var pacCicle = document.createElementNS(svgNS, 'svg');
 
         //pacCicle.setAttribute('id', 'pacMan');
         pacCicle.setAttribute('id', 'pacMan');
         pacCicle.setAttribute('r', this.r);
         pacCicle.setAttribute('cy', this.positionY);
         pacCicle.setAttribute('cx', this.positionX);
+		pacCicle.setAttributeNS("http://www.w3.org/1999/xlink", 'xlink:href', "pacman sprite.png");
 
-        document.getElementById('game').appendChild(pacCicle);
+        //document.getElementById('game').appendChild(pacCicle);
+		// draw cropped image
+        var spriteX = [0, 40, 80, 118,80, 40];
+        var sourceX = spriteX[this.frame];
+        var sourceY = 0;
+        var sourceWidth = 38;
+        var sourceHeight = 40;
+        var destWidth = 38;
+        var destHeight = sourceHeight;
+        var destX = 100;
+        var destY = 100;
+              var imageObj = new Image();
+              imageObj.src = 'pacman sprite.png';
+        ctx.drawImage(this.imageObj, sourceX, 2 , 39, 43, this.positionX - this.r, this.positionY-this.r, 40, 44);
+        this.frame++;
+        if (this.frame > 5) {
+            this.frame = 0;
+        }
 
     };
 
