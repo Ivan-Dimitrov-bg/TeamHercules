@@ -32,7 +32,7 @@ function setTrap() {
 	}
 	],
 	trapsAllLength = trapsAll.length,
-	randomTrapIndex = getRandomValue(0, trapsAllLength - 1),
+	randomTrapIndex = Math.random() * (trapsAllLength - 1) | 0;
 	playerAnswer = '',
 	x = 0,
 	y = 0,
@@ -91,7 +91,8 @@ function setTrap() {
 			id: letter,
 			shadowColor: 'white',
 			shadowBlur: 18,
-			shadowOffset: {x:1,y:2}
+			shadowOffset: {x:1,y:1},
+			shadowOpacity: 0.7
 		});
 		newText.offsetX(newText.width()/2);		//center
 		layer.add(newText);
@@ -155,21 +156,18 @@ function setTrap() {
 			
 			if (ev.keyCode === 65) {
 				playerAnswer = keyChar;
-				checkIfTrueAnswer(pacMan);
+				checkIfTrueAnswer(game, pacMan, pacManSpeed);
 				hideLayer(layer);
-				game.pause = false;
 			}
 			if (ev.keyCode === 66) {
 				playerAnswer = keyChar;
-				checkIfTrueAnswer(pacMan);
+				checkIfTrueAnswer(game, pacMan, pacManSpeed);
 				hideLayer(layer);
-                game.pause = false;
 			}
 			if (ev.keyCode === 67) {
 				playerAnswer = keyChar;
-				checkIfTrueAnswer(pacMan);
+				checkIfTrueAnswer(game, pacMan, pacManSpeed);
 				hideLayer(layer);
-                game.pause = false;
 			}
 		});		
 	}
@@ -177,7 +175,7 @@ function setTrap() {
 	function onPickTrapAnswerClick (trapAnswer) {
 		trapAnswer.on('click', function() {
 			playerAnswer = this.id();
-			checkIfTrueAnswer(pacMan);
+			checkIfTrueAnswer(game, pacMan, pacManSpeed);
 			hideLayer(layer);
 		});
 	}
@@ -187,24 +185,26 @@ function setTrap() {
 	onPickTrapAnswerClick(trapAnswerC, layer);
 
 //check if answer is correct or not
-	function checkIfTrueAnswer(pacMan) {		
+	function checkIfTrueAnswer(game, pacMan, pacManSpeed) {		
 	    if (playerAnswer == trapsAll[randomTrapIndex]['correct']) {
 			clearTimeout();
 		    score += 100;
-			pacMan.speed += 2;
+			pacMan.speed = pacManSpeed + 2;
+			game.pause = false;
 			//reset speed after 10 seconds
 			setTimeout (function () {
 				pacMan.speed = pacManSpeed;
 			}, 10000);
-			game.pause = false;
+			
 		} else {
 			clearTimeout();
-			pacMan.speed -= 2;
+			pacMan.speed = pacManSpeed - 2;
+			game.pause = false;
 			//reset speed after 10 seconds
 			setTimeout (function () {
 				pacMan.speed = pacManSpeed;
 			}, 10000);
-			game.pause = false;
+			
 		}
 	}
 	function hideLayer(layer) {

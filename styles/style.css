@@ -1,5 +1,30 @@
-﻿#game{
-    border-style:solid;
+﻿body, div, h1, h2, p, header, footer, section {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Calibri;
+background: #000000;
+background: -moz-linear-gradient(top,  #000000 0%, #333333 55%, #545454 70%, #000000 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(55%,#333333), color-stop(70%,#545454), color-stop(100%,#000000));
+background: -webkit-linear-gradient(top,  #000000 0%,#333333 55%,#545454 70%,#000000 100%);
+background: -o-linear-gradient(top,  #000000 0%,#333333 55%,#545454 70%,#000000 100%);
+background: -ms-linear-gradient(top,  #000000 0%,#333333 55%,#545454 70%,#000000 100%);
+background: linear-gradient(to bottom,  #000000 0%,#333333 55%,#545454 70%,#000000 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=0 );
+
+
+}
+h1 {
+color:yellowgreen;
+margin:10px;
+}
+h2 {
+margin:10px;
+}
+#game {
+    border-style: solid;
     border-width: 2px;
     background-color: black;
     width: 955px;
@@ -43,11 +68,35 @@ canvas {
     width: 960px;
     height:450px;
 }
+#start-game {
+	background-color:black;
+	border: 2px solid black;
+	border-radius:10px;
+	color:yellowgreen;
+	padding:7px;
+	font-size:18px;
+	font-weight:bold;
+	position:absolute;
+	top:467px;
+	left:837px;
+	z-index:3;
+}
+#game-section button:hover{
+	border: 2px solid yellowgreen;
+	cursor:pointer;
+}
+#game-section button:focus{
+	outline:0;
+}
+#game-section {
+	height:455px;
+	border-bottom: 2px solid purple;
+}
 #high-scores {
 	position:relative;
 	background-color: black;
 	vertical-align:top;
-	margin-left: 960px;
+	margin-left: 958px;
 	padding: 0 10px;
 	text-align: center;
 	height:450px;
@@ -66,3 +115,24 @@ canvas {
 		font-weight:normal;
 		font-variant:small-caps;
 	}
+	
+#about-the-game {
+	color: #a0a0a0;
+	padding:10px;
+}
+	#about-the-game p {
+		text-align:justify;
+		border-top: 2px solid purple;
+		border-bottom: 2px solid purple;
+	}
+footer {
+padding:10px;
+color:grey;
+}
+	footer #credit {
+	text-align:right;
+	right:0;
+	}
+.italic {
+font-style:italic;
+}
