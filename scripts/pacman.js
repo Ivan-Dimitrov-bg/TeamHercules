@@ -103,6 +103,8 @@ function PacMan(x, y, direction, speed) {
                     setTrap();
                     game.pause = true;
                 }
+
+                soundEat.play()
                 allLetters.splice(i, 1);
             }
         }
@@ -166,4 +168,27 @@ function resetPacMan(pacMan) {
 	pacMan.positionY = 128;
 	pacMan.wantedDirection = 'left';
 	pacMan.speed = pacManSpeed;
+}
+
+function StartChangeDirectionListener(objectToControl) {
+    document.onkeydown = khandle;
+     
+    function khandle(key) {
+        if (key.keyCode === 37) {
+			//key.preventDefault();
+            objectToControl.wantedDirection= "left";
+        }
+        if (key.keyCode === 39) {
+			//key.preventDefault();
+            objectToControl.wantedDirection = "right";
+        }
+        if (key.keyCode === 38) {
+			//key.preventDefault();
+            objectToControl.wantedDirection = "up";
+        }
+        if (key.keyCode === 40) {
+			//key.preventDefault();
+            objectToControl.wantedDirection = "down";
+        }
+    }
 }

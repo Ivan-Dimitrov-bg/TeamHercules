@@ -149,6 +149,7 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 	
 		if (!(pacMan.positionX > this.x + this.radius || pacMan.positionX + pacMan.r < this.x || 
 					pacMan.positionY > this.y + this.radius || pacMan.positionY + pacMan.r < this.y)) {
+		    soundDie.play();
 			if (lives > 1) {
 				loseLife();
 			} else {

@@ -1,4 +1,9 @@
-﻿var canvas = document.getElementById("canvas"),
+﻿var soundEat = new Audio("./sounds/pacman_coinin.wav"),
+    soundDie = new Audio("./sounds/pacman_death.wav"),
+    soundIntro = new Audio("./sounds/pacman_song.wav");
+soundEat.volume=0.3;
+
+var canvas = document.getElementById("canvas"),
 	ctx = canvas.getContext("2d"),
 	maxX = ctx.canvas.width,
 	maxY = ctx.canvas.height;
@@ -9,7 +14,7 @@ var level = 0,
 	newGame = false;
 
 var fieldWalls = LevelsDesign[level].labyrinth,
-	allLetters = initializeFood(1),
+	allLetters = initializeFood(level),
 	cellHeight = 50,
 	wallHeight = 6;
 	
@@ -21,7 +26,6 @@ var	guardians = creatGuardians(LevelsDesign[level].guardiansPositions),
 	StartChangeDirectionListener(pacMan);
 
 var game = new Game();
-//game.pause = false;
 	
 (function initGame() {
 	drawField(fieldWalls);
@@ -51,12 +55,14 @@ window.addEventListener('keydown', function (e) {
 		game.pause = false;
 	}
 }, false);
+
 var startBtn = document.getElementById('start-game');
 	startBtn.addEventListener('click', function () {
 		if (newGame == false) {
 			startGame(game);
 			}
-		});
+	});
+
 //start page
 var tips = document.getElementById('tips'),
 	tipsBtn = document.getElementById('tips-btn');
@@ -74,7 +80,7 @@ var tips = document.getElementById('tips'),
 				game.pause = false;
 			}
 		}
-	});
+    });
 	
 var closeTips = document.getElementById('closeTips');
 	closeTips.addEventListener('click', function () {
@@ -160,30 +166,6 @@ function drawField(fieldWalls) {
 
 }
 
-function StartChangeDirectionListener(objectToControl) {
-    document.onkeydown = khandle;
-     
-    function khandle(key) {
-        if (key.keyCode === 37) {
-			//key.preventDefault();
-            objectToControl.wantedDirection= "left";
-        }
-        if (key.keyCode === 39) {
-			//key.preventDefault();
-            objectToControl.wantedDirection = "right";
-        }
-        if (key.keyCode === 38) {
-			//key.preventDefault();
-            objectToControl.wantedDirection = "up";
-        }
-        if (key.keyCode === 40) {
-			//key.preventDefault();
-            objectToControl.wantedDirection = "down";
-        }
-    }
-}
-
-
 
 function gameCicle()
 {
@@ -206,12 +188,19 @@ function gameCicle()
 
 setInterval(function () { gameCicle(); }, 40);
 
-function startGame(game) {								//TODO
-	updateHighScores();
+function startGame(game) {
+    pacMan = null;
+    pacMan = new PacMan(408, 128, 'left', pacManSpeed);
+    StartChangeDirectionListener(pacMan);
+    allLetters = null;
+    allLetters = initializeFood(level);
+    soundIntro.play();
+    updateHighScores();
+    level = 0;
 	score = 0;
 	lives = 3;
-	//resetPacMan(pacMan);
-	//reset guardians
+
+	resetGuardians(guardians,LevelsDesign[level].guardiansPositions);
 	newGame = true;
 	game.pause = false;	
 }
@@ -222,7 +211,7 @@ function endGame() {								//TODO
 	var name = prompt('GAME OVER! \n Your brain expanded with: ' + score + '. Enter your name:') || 'Guest'; //better way?
 	sessionStorage.setItem(score, name);										//use localStorage instead of sessionStorage?
     updateHighScores();
-	newGame = false;
+    newGame = false;
 
 	document.onkeydown = function(e){ return true; }
 }

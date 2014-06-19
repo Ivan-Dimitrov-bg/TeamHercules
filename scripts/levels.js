@@ -81,7 +81,7 @@ var level1 = {
 LevelsDesign.push(level1);
 
 function initializeFood(level){
-	var food = LevelsDesign[level-1].food;
+	var food = LevelsDesign[level].food;
 	var allLettersWithPositions = [];
 
     //for every food sequence
