@@ -249,16 +249,17 @@ function displayScore() {
 	ctx.textAlign = 'left';
 	ctx.fillStyle = "yellowgreen";
 	ctx.fillText("Brain expansion: " + score, 10, 435);
-	}
+}
+
 //update high-score board
 function updateHighScores () {
 	var highScoreBoard = document.getElementById('high-score-board'),
 		highScoresCount = 10;
-//remove a child node to keep high-score board length lower than highScoresCount
+        //remove a child node to keep high-score board length lower than highScoresCount
         while (highScoreBoard.firstChild) {
             highScoreBoard.removeChild(highScoreBoard.firstChild);
         }
-//sort localStorage
+        //sort localStorage
 		var sortedScores = [];
 	
 		for (var prop in localStorage) {
@@ -270,7 +271,7 @@ function updateHighScores () {
 		sortedScores.sort(function (a, b) {
 				return b - a;
 			});
-//add first highScoresCount number of
+        //add first highScoresCount number of
         for (i = 0; i < highScoresCount; i++) {
             var highScore = sortedScores[i];
             if (highScore && highScore !== undefined) {
@@ -279,9 +280,9 @@ function updateHighScores () {
                 highScoreBoard.appendChild(scoreListItem);
             }
         }
-    };
-//random functions
+};
 
+//random functions
 function getRandomValue(min, max) {
 
 	return (Math.random() * (max - min) + min) | 0;
