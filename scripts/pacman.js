@@ -98,7 +98,7 @@ function PacMan(x,y,direction, speed) {
                 dY *= -1;
             }
             if (dX + dY < this.r*2/3) {
-                score += 10;
+                EvilPacmanScore += 10;
                 if (letter.letter == '{') {
                     setTrap();
                     game.pause = true;

@@ -9,7 +9,7 @@ var fieldWalls = LevelsDesign[0].labyrinth,
 	wallHeight = 6;
 
 var level = 0,
-	score = 0,
+	EvilPacmanScore = 0,
 	lives = 3,
 	newGame = false;
 	
@@ -229,7 +229,7 @@ function gameCicle()
 
 function startGame(game) {								//TODO
 	updateHighScores();
-	score = 0;
+	EvilPacmanScore = 0;
 	lives = 3;
 	//resetPacMan(pacMan);
 	//reset guardians
@@ -240,8 +240,8 @@ function startGame(game) {								//TODO
 function endGame() {								//TODO
 	game.pause = true;
 	lives = 0;
-	var name = prompt('GAME OVER! \n Your brain expanded with: ' + score + '. Enter your name:') || 'Guest'; //better way?
-	sessionStorage.setItem(score, name);										//use localStorage instead of sessionStorage?
+	var EvilPacmanName = prompt('GAME OVER! \n Your brain expanded with: ' + EvilPacmanScore + '. Enter your name:') || 'Guest'; //better way?
+	localStorage.setItem(EvilPacmanScore, EvilPacmanName);
     updateHighScores();
 	newGame = false;
 
@@ -285,7 +285,7 @@ function displayScore() {
 	ctx.font = "20px Calibri";
 	ctx.textAlign = 'left';
 	ctx.fillStyle = "yellowgreen";
-	ctx.fillText("Brain expansion: " + score, 10, 435);
+	ctx.fillText("Brain expansion: " + EvilPacmanScore, 10, 435);
 	}
 //update high-score board
 function updateHighScores () {
@@ -295,11 +295,11 @@ function updateHighScores () {
         while (highScoreBoard.firstChild) {
             highScoreBoard.removeChild(highScoreBoard.firstChild);
         }
-//sort sessionStorage
+//sort localStorage
 		var sortedScores = [];
 	
-		for (var prop in sessionStorage) {
-				if (sessionStorage.hasOwnProperty(prop) && !isNaN(prop)) {
+		for (var prop in localStorage) {
+				if (localStorage.hasOwnProperty(prop) && !isNaN(prop)) {
 					sortedScores.push(prop);
 				}
 			}
@@ -312,7 +312,7 @@ function updateHighScores () {
             var highScore = sortedScores[i];
             if (highScore && highScore !== undefined) {
                 var scoreListItem = document.createElement('li');
-                scoreListItem.innerText = sessionStorage[highScore] + ' : ' + highScore;	//sessionStorage[highScore] = name
+                scoreListItem.innerText = localStorage[highScore] + ' : ' + highScore;	//localStorage[highScore] = name
                 highScoreBoard.appendChild(scoreListItem);
             }
         }

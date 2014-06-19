@@ -188,7 +188,7 @@ function setTrap() {
 	function checkIfTrueAnswer(game, pacMan, pacManSpeed) {		
 	    if (playerAnswer == trapsAll[randomTrapIndex]['correct']) {
 			clearTimeout();
-		    score += 100;
+		    EvilPacmanScore += 100;
 			pacMan.speed = pacManSpeed + 2;
 			game.pause = false;
 			//reset speed after 10 seconds
