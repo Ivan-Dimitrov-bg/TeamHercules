@@ -172,7 +172,7 @@ function gameCicle()
     if (game.pause === false) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
         drawLetters(allLetters, ctx);
-
+		ctx.fillText(20, 20, "h");
         pacMan.draw();
         pacMan.move();
 
@@ -185,21 +185,20 @@ function gameCicle()
 		displayLives(lives);
     }
 }
-
-setInterval(function () { gameCicle(); }, 40);
+	setInterval(function () {gameCicle();}, 40);
 
 function startGame(game) {
-    pacMan = null;
-    pacMan = new PacMan(408, 128, 'left', pacManSpeed);
-    StartChangeDirectionListener(pacMan);
-    allLetters = null;
-    allLetters = initializeFood(level);
+    
     soundIntro.play();
     updateHighScores();
     level = 0;
 	score = 0;
 	lives = 3;
-
+	pacMan = null;
+    pacMan = new PacMan(408, 128, 'left', pacManSpeed);
+    StartChangeDirectionListener(pacMan);
+    allLetters = null;
+    allLetters = initializeFood(level);
 	resetGuardians(guardians,LevelsDesign[level].guardiansPositions);
 	newGame = true;
 	game.pause = false;	
@@ -209,7 +208,7 @@ function endGame() {								//TODO
 	game.pause = true;
 	lives = 0;
 	var name = prompt('GAME OVER! \n Your brain expanded with: ' + score + '. Enter your name:') || 'Guest'; //better way?
-	localStorage.setItem(EvilPacmanScore, EvilPacmanName);									
+	sessionStorage.setItem(score, name);									
     updateHighScores();
     newGame = false;
 
@@ -262,8 +261,8 @@ function updateHighScores () {
         //sort localStorage
 		var sortedScores = [];
 	
-		for (var prop in localStorage) {
-				if (localStorage.hasOwnProperty(prop) && !isNaN(prop)) {
+		for (var prop in sessionStorage) {
+				if (sessionStorage.hasOwnProperty(prop) && !isNaN(prop)) {
 					sortedScores.push(prop);
 				}
 			}
