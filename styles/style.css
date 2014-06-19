@@ -126,6 +126,8 @@ canvas {
 		text-align: left;
 		font-size: 18px;
 		color: yellowgreen;
+		display:inline-block;
+        margin:0 auto;
 	}
 	#high-scores h1 {
 		font-size: 35px;

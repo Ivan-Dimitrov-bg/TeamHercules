@@ -1,27 +1,31 @@
-﻿var canvas = document.getElementById("canvas"),
+﻿var soundEat = new Audio("./sounds/pacman_coinin.wav"),
+    soundDie = new Audio("./sounds/pacman_death.wav"),
+    soundIntro = new Audio("./sounds/pacman_song.wav");
+soundEat.volume=0.3;
+
+var canvas = document.getElementById("canvas"),
 	ctx = canvas.getContext("2d"),
 	maxX = ctx.canvas.width,
 	maxY = ctx.canvas.height;
-
-var fieldWalls = LevelsDesign[0].labyrinth,
-	allLetters = initializeFood(1),
-	cellHeight = 50,
-	wallHeight = 6;
 
 var level = 0,
 	EvilPacmanScore = 0,
 	lives = 3,
 	newGame = false;
+
+var fieldWalls = LevelsDesign[level].labyrinth,
+	allLetters = initializeFood(level),
+	cellHeight = 50,
+	wallHeight = 6;
 	
 
-var	guardians = creatGuardians(4, maxX, maxY),
+var	guardians = creatGuardians(LevelsDesign[level].guardiansPositions),
 	pacManSpeed = 4,
 	pacMan = new PacMan(408,128, 'left', pacManSpeed);
 	
 	StartChangeDirectionListener(pacMan);
 
 var game = new Game();
-//game.pause = false;
 	
 (function initGame() {
 	drawField(fieldWalls);
@@ -51,12 +55,14 @@ window.addEventListener('keydown', function (e) {
 		game.pause = false;
 	}
 }, false);
+
 var startBtn = document.getElementById('start-game');
 	startBtn.addEventListener('click', function () {
 		if (newGame == false) {
 			startGame(game);
 			}
-		});
+	});
+
 //start page
 var tips = document.getElementById('tips'),
 	tipsBtn = document.getElementById('tips-btn');
@@ -74,7 +80,7 @@ var tips = document.getElementById('tips'),
 				game.pause = false;
 			}
 		}
-	});
+    });
 	
 var closeTips = document.getElementById('closeTips');
 	closeTips.addEventListener('click', function () {
@@ -160,59 +166,13 @@ function drawField(fieldWalls) {
 
 }
 
-function StartChangeDirectionListener(objectToControl) {
-    document.onkeydown = khandle;
-     
-    function khandle(key) {
-        if (key.keyCode === 37) {
-			//key.preventDefault();
-            objectToControl.wantedDirection= "left";
-        }
-        if (key.keyCode === 39) {
-			//key.preventDefault();
-            objectToControl.wantedDirection = "right";
-        }
-        if (key.keyCode === 38) {
-			//key.preventDefault();
-            objectToControl.wantedDirection = "up";
-        }
-        if (key.keyCode === 40) {
-			//key.preventDefault();
-            objectToControl.wantedDirection = "down";
-        }
-    }
-}
-
-function creatGuardians(guardiansCount, maxX, maxY) {
-    guardians = [],
-
-	guardiansPositions = [{row: 0, col: 0},
-					{row:7, col: 0},
-					{row: 0, col: 18},
-					{row: 7, col: 18}	
-];
-
-    for (i = 0; i < guardiansPositions.length; i++) {
-    	var x = guardiansPositions[i].col*50 + (cellHeight + wallHeight) / 2,
-    		y = guardiansPositions[i].row*50 + (cellHeight + wallHeight) / 2,
-    		radius = 15,
-			guardianSpeed = 3
-    		direction = randomDirection();						//TODO - change direction eventually
-    				
-    	var guardian = new Guardian(x, y, radius, guardianSpeed, 'right', 'black', 'yellowgreen');
-    
-    	guardians.push(guardian);
-    }
-
-    return guardians;
-}
 
 function gameCicle()
 {
     if (game.pause === false) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);	//clear
         drawLetters(allLetters, ctx);
-        ctx.fillText(20, 20, "h");
+		ctx.fillText(20, 20, "h");
         pacMan.draw();
         pacMan.move();
 
@@ -227,12 +187,20 @@ function gameCicle()
 }
 	setInterval(function () {gameCicle();}, 40);
 
-function startGame(game) {								//TODO
-	updateHighScores();
+	
+function startGame(game) {
+    
+    soundIntro.play();
+    updateHighScores();
+    level = 0;
 	EvilPacmanScore = 0;
 	lives = 3;
-	//resetPacMan(pacMan);
-	//reset guardians
+	pacMan = null;
+    pacMan = new PacMan(408, 128, 'left', pacManSpeed);
+    StartChangeDirectionListener(pacMan);
+    allLetters = null;
+    allLetters = initializeFood(level);
+	resetGuardians(guardians,LevelsDesign[level].guardiansPositions);
 	newGame = true;
 	game.pause = false;	
 }
@@ -243,7 +211,7 @@ function endGame() {								//TODO
 	var EvilPacmanName = prompt('GAME OVER! \n Your brain expanded with: ' + EvilPacmanScore + '. Enter your name:') || 'Guest'; //better way?
 	localStorage.setItem(EvilPacmanScore, EvilPacmanName);
     updateHighScores();
-	newGame = false;
+    newGame = false;
 
 	document.onkeydown = function(e){ return true; }
 }
@@ -252,15 +220,10 @@ function loseLife() {
 	game.pause = true;
 	lives--;
 	setTimeout(function () {
-		resetPacMan(pacMan);
+	    resetPacMan(pacMan);
+        resetGuardians(guardians,LevelsDesign[level].guardiansPositions);
 		game.pause = false;
 	}, 2000);
-}
-function resetPacMan(pacMan) {
-	pacMan.positionX = 408;
-	pacMan.positionY = 128;
-	pacMan.wantedDirection = 'left';
-	pacMan.speed = pacManSpeed;
 }
 
 function displayLives(lives) {
@@ -287,15 +250,16 @@ function displayScore() {
 	ctx.fillStyle = "yellowgreen";
 	ctx.fillText("Brain expansion: " + EvilPacmanScore, 10, 435);
 	}
+
 //update high-score board
 function updateHighScores () {
 	var highScoreBoard = document.getElementById('high-score-board'),
 		highScoresCount = 10;
-//remove a child node to keep high-score board length lower than highScoresCount
+        //remove a child node to keep high-score board length lower than highScoresCount
         while (highScoreBoard.firstChild) {
             highScoreBoard.removeChild(highScoreBoard.firstChild);
         }
-//sort localStorage
+        //sort localStorage
 		var sortedScores = [];
 	
 		for (var prop in localStorage) {
@@ -307,7 +271,7 @@ function updateHighScores () {
 		sortedScores.sort(function (a, b) {
 				return b - a;
 			});
-//add first highScoresCount number of
+        //add first highScoresCount number of
         for (i = 0; i < highScoresCount; i++) {
             var highScore = sortedScores[i];
             if (highScore && highScore !== undefined) {
@@ -316,9 +280,9 @@ function updateHighScores () {
                 highScoreBoard.appendChild(scoreListItem);
             }
         }
-    };
-//random functions
+};
 
+//random functions
 function getRandomValue(min, max) {
 
 	return (Math.random() * (max - min) + min) | 0;
