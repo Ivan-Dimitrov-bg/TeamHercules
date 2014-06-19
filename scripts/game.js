@@ -208,7 +208,7 @@ function endGame() {								//TODO
 	game.pause = true;
 	lives = 0;
 	var name = prompt('GAME OVER! \n Your brain expanded with: ' + score + '. Enter your name:') || 'Guest'; //better way?
-	sessionStorage.setItem(score, name);									
+	localStorage.setItem(score, name);									
     updateHighScores();
     newGame = false;
 
@@ -261,8 +261,8 @@ function updateHighScores () {
         //sort localStorage
 		var sortedScores = [];
 	
-		for (var prop in sessionStorage) {
-				if (sessionStorage.hasOwnProperty(prop) && !isNaN(prop)) {
+		for (var prop in localStorage) {
+				if (localStorage.hasOwnProperty(prop) && !isNaN(prop)) {
 					sortedScores.push(prop);
 				}
 			}
