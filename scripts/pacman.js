@@ -28,10 +28,26 @@ function PacMan(x, y, direction, speed) {
         pacCicle.setAttributeNS("http://www.w3.org/1999/xlink", 'xlink:href', "pacman sprite.png");
 
         //document.getElementById('game').appendChild(pacCicle);
+
         // draw cropped image
         var spriteX = [0, 40, 80, 118, 80, 40];
-        var sourceX = spriteX[this.frame];
-        var sourceY = 0;
+        var spriteY= [0, 40, 82, 122, 82, 40];
+        if (this.direction == 'right') {
+            var sourceX = spriteX[this.frame];
+            var sourceY = 2;
+        }
+        else if (this.direction == 'left') {
+            var sourceX = spriteX[this.frame];
+            var sourceY = 44;
+        }
+        else if (this.direction == 'up') {
+            var sourceX = 2;
+            var sourceY = 86 + spriteY[this.frame];
+        }
+        else if (this.direction == 'down') {
+            var sourceX = 42;
+            var sourceY = 86 + spriteY[this.frame];
+        }
         var sourceWidth = 38;
         var sourceHeight = 40;
         var destWidth = 38;
@@ -40,7 +56,7 @@ function PacMan(x, y, direction, speed) {
         var destY = 100;
         var imageObj = new Image();
         imageObj.src = 'pacman sprite.png';
-        ctx.drawImage(this.imageObj, sourceX, 2, 39, 43, this.positionX - this.r, this.positionY - this.r, 40, 44);
+        ctx.drawImage(this.imageObj, sourceX, sourceY, 39, 43, this.positionX - this.r, this.positionY - this.r, 40, 44);
         this.frame++;
         if (this.frame > 5) {
             this.frame = 0;
