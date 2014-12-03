@@ -20,14 +20,11 @@ function PacMan(x, y, direction, speed) {
         var svgNS = 'http://www.w3.org/2000/svg';
         var pacCicle = document.createElementNS(svgNS, 'svg');
 
-        //pacCicle.setAttribute('id', 'pacMan');
         pacCicle.setAttribute('id', 'pacMan');
         pacCicle.setAttribute('r', this.r);
         pacCicle.setAttribute('cy', this.positionY);
         pacCicle.setAttribute('cx', this.positionX);
         pacCicle.setAttributeNS("http://www.w3.org/1999/xlink", 'xlink:href', "pacman sprite.png");
-
-        //document.getElementById('game').appendChild(pacCicle);
 
         // draw cropped image
         var spriteX = [0, 40, 80, 118, 80, 40];
@@ -48,6 +45,7 @@ function PacMan(x, y, direction, speed) {
             var sourceX = 42;
             var sourceY = 86 + spriteY[this.frame];
         }
+
         var sourceWidth = 38;
         var sourceHeight = 40;
         var destWidth = 38;
@@ -56,12 +54,13 @@ function PacMan(x, y, direction, speed) {
         var destY = 100;
         var imageObj = new Image();
         imageObj.src = 'pacman sprite.png';
+
         ctx.drawImage(this.imageObj, sourceX, sourceY, 39, 43, this.positionX - this.r, this.positionY - this.r, 40, 44);
+
         this.frame++;
         if (this.frame > 5) {
             this.frame = 0;
         }
-
     };
 
     this.move = function () {
@@ -141,13 +140,15 @@ function PacMan(x, y, direction, speed) {
 
             //if move to left and hit wall
             if (direction === 'left') {
-                if (fieldWalls[currRow * 2 + 1][currCol] === '|' && (posX % cellHeight <= (cellHeight + wallHeight) / 2)) {
+                if (fieldWalls[currRow * 2 + 1][currCol] === '|' &&
+                    (posX % cellHeight <= (cellHeight + wallHeight) / 2)) {
                     return true;
                 }
             }
-                //if move to right and hit wall
+            //if move to right and hit wall
             else if (direction === 'right') {
-                if (fieldWalls[currRow * 2 + 1][currCol + 1] === '|' && (posX % cellHeight >= (cellHeight + wallHeight) / 2)) {
+                if (fieldWalls[currRow * 2 + 1][currCol + 1] === '|' &&
+                    (posX % cellHeight >= (cellHeight + wallHeight) / 2)) {
                     return true;
                 }
             }
@@ -163,13 +164,15 @@ function PacMan(x, y, direction, speed) {
 
             //if moves up and hit wall
             if (direction === 'up') {
-                if (fieldWalls[currRow * 2][currCol] === '-' && (posY % cellHeight <= (cellHeight + wallHeight) / 2)) {
+                if (fieldWalls[currRow * 2][currCol] === '-' &&
+                    (posY % cellHeight <= (cellHeight + wallHeight) / 2)) {
                     return true;
                 }
             }
-                //if moves down and hit wall
+            //if moves down and hit wall
             else if (direction === 'down') {
-                if (fieldWalls[currRow * 2 + 2][currCol] === '-' && (posY % cellHeight >= (cellHeight + wallHeight) / 2)) {
+                if (fieldWalls[currRow * 2 + 2][currCol] === '-' &&
+                    (posY % cellHeight >= (cellHeight + wallHeight) / 2)) {
                     return true;
                 }
             }

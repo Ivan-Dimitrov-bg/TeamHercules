@@ -1,6 +1,6 @@
-﻿var soundEat = new Audio("./sounds/pacman_coinin.wav"),
-    soundDie = new Audio("./sounds/pacman_death.wav"),
-    soundIntro = new Audio("./sounds/pacman_song.wav");
+﻿var soundEat = new Audio("./sounds/pacman_coinin.wav");
+var soundDie = new Audio("./sounds/pacman_death.wav");
+var soundIntro = new Audio("./sounds/pacman_song.wav");
 soundEat.volume=0.3;
 
 var canvas = document.getElementById("canvas"),
@@ -13,22 +13,22 @@ var level = 0,
 	lives = 3,
 	newGame = false;
 
-var fieldWalls = LevelsDesign[level].labyrinth,
-	allLetters = initializeFood(level),
-	cellHeight = 50,
-	wallHeight = 6;
+var fieldWalls = LevelsDesign[level].labyrinth;
+var allLetters = initializeFood(level);
+var cellHeight = 50;
+var wallHeight = 6;
 	
 
-var	guardians = creatGuardians(LevelsDesign[level].guardiansPositions),
-	pacManSpeed = 4,
-	pacMan = new PacMan(408,128, 'left', pacManSpeed);
+var guardians = creatGuardians(LevelsDesign[level].guardiansPositions);
+var pacManSpeed = 4;
+var pacMan = new PacMan(408,128, 'left', pacManSpeed);
 	
-	StartChangeDirectionListener(pacMan);
+StartChangeDirectionListener(pacMan);
 
 var game = new Game();
 	
 (function initGame() {
-	drawField(fieldWalls);
+	drawField(fieldWalls, cellHeight, wallHeight);
 	drawLetters(allLetters, ctx);
 
 	pacMan.draw();
@@ -93,14 +93,15 @@ var closeTips = document.getElementById('closeTips');
 	
 var gameStory = document.getElementById('game-story'),
 	storyBtn = document.getElementById('story-btn');
-	storyBtn.addEventListener('click', function () {
+storyBtn.addEventListener('click', function () {
+
 		if (gameStory.classList.contains('hidden')) {
 			gameStory.classList.remove('hidden');
 			if (newGame) {
 				game.pause = true;
 			}
 		} else {
-			gameStory.classList.add('hidden');
+		    gameStory.classList.add('hidden');
 			if (newGame) {
 				game.pause = false;
 			}
@@ -110,7 +111,7 @@ var gameStory = document.getElementById('game-story'),
 var closeStory = document.getElementById('closeStory');
 	closeStory.addEventListener('click', function () {
 		gameStory.classList.add('hidden');
-		
+	
 		if (newGame) {
 			game.pause = false;
 		}
@@ -121,51 +122,6 @@ function Game() {
     this.pause = true;
     this.level = 1;
 }
-
-//maze
-function drawField(fieldWalls) {
-
-    var svgNS = 'http://www.w3.org/2000/svg';
-
-    for (var i = 0; i < fieldWalls.length; i++) {
-        var y = cellHeight * (~~(i/2));
-        for (var j = 0; j < fieldWalls[i].length; j++) {
-
-            var rect = document.createElementNS(svgNS, 'rect');
-
-            if (fieldWalls[i][j] === "-") {
-                rect.setAttribute('x', cellHeight * j);
-                rect.setAttribute('y', y);
-                rect.setAttribute('width', cellHeight + wallHeight);
-                rect.setAttribute('height', wallHeight);
-                rect.setAttribute('class', 'wall');
-                document.getElementById('game').appendChild(rect);
-            }
-            else if (fieldWalls[i][j] === "|") {
-                rect.setAttribute('x', cellHeight * j);
-                rect.setAttribute('y', y);
-                rect.setAttribute('width', wallHeight);
-                rect.setAttribute('height', cellHeight + wallHeight);
-                rect.class = 'wall';
-                document.getElementById('game').appendChild(rect);
-            }
-         }
-    }
-	
-	var sign = document.createElementNS(svgNS, 'text');
-	sign.setAttribute('x', 412);
-	sign.setAttribute('y', 190);
-	sign.innerHTML = 'JavaScript <tspan x="432" y="230">Museum</tspan>';
-	document.getElementById('game').appendChild(sign);
-	
-	var levelSign = document.createElementNS(svgNS, 'text');
-	levelSign.setAttribute('x', 18);
-	levelSign.setAttribute('y', 85);
-	levelSign.innerHTML = 'level <tspan x="22" y="130">1</tspan>';
-	document.getElementById('game').appendChild(levelSign);
-
-}
-
 
 function gameCicle()
 {
@@ -181,11 +137,13 @@ function gameCicle()
             guardians[i].move();
 			guardians[i].detectCollisionWithPacman(pacMan);
         }
+
         displayScore();
 		displayLives(lives);
     }
 }
-	setInterval(function () {gameCicle();}, 40);
+
+setInterval(function () { gameCicle(); }, 40);
 
 	
 function startGame(game) {
@@ -319,6 +277,5 @@ function randomDirection() {
 
 	}
 
-return direction;	
-
+    return direction;	
 }

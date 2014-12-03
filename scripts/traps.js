@@ -1,45 +1,49 @@
 function setTrap() {
-	var trapsAll = [{
-		'question': 'What is the type of NaN?',
-		'a': 'NaN has a type?!',
-		'b': 'number',
-		'c': 'undefined',
-		'correct': 'b'
-	}, {
-	    'question': 'How do you create a variable zap that is equal to the string "Whazaaaaap?"?',
-	    'a': 'string zap = "Whazaaaaap?";',
-	    'b': 'var zap = "Whazaaaaap?"',
-	    'c': 'I shout at my screen "Whazaaaaap?"',
-		'correct': 'b'
-	}, {
-		'question': 'How do you create a <div> element using JavaScript?',
-		'a': 'document .createElement("div")',
-		'b': 'document .getElementByTagName("div")',
-		'c': 'I had no idea I could do that.',
-		'correct': 'a'
-	}, {
-		'question': 'Who should have a statue raised in the JavaScript Museum?',
-		'a': 'Gosho',
-		'b': 'Pesho',
-		'c': 'Both',
-		'correct': 'c'
-	}, {
-		'question': 'How do you add a comment in JavaScript?',
-		'a': 'I just share my opinion.',
-		'b': '<!--This is a comment.-->',
-		'c': '//This is a comment.',
-		'correct': 'c'
-	}
-	],
-	trapsAllLength = trapsAll.length,
-	randomTrapIndex = Math.random() * (trapsAllLength - 1) | 0;
-	playerAnswer = '',
-	x = 0,
-	y = 0,
-	text = '',
-	textWidth = 0;
 
-//draw
+    var bubbleHeadingText = 'Uh oh! You fell into a trap!';
+    var bubbleTipText = 'Seems like the JavaScript Guardians won\'t let you steal the museum\'s treasures so easily. Solve the riddle below to become faster for a while. But be careful! If your answer is wrong, you\'ll become slower.';
+
+    var traps = [{
+        'question': 'What is the type of NaN?',
+        'a': 'NaN has a type?!',
+        'b': 'number',
+        'c': 'undefined',
+        'correct': 'b'
+    }, {
+        'question': 'How do you create a variable zap that is equal to the string "Whazaaaaap?"?',
+        'a': 'string zap = "Whazaaaaap?";',
+        'b': 'var zap = "Whazaaaaap?"',
+        'c': 'I shout at my screen "Whazaaaaap?"',
+        'correct': 'b'
+    }, {
+        'question': 'How do you create a <div> element using JavaScript?',
+        'a': 'document .createElement("div")',
+        'b': 'document .getElementByTagName("div")',
+        'c': 'I had no idea I could do that.',
+        'correct': 'a'
+    }, {
+        'question': 'Who should have a statue raised in the JavaScript Museum?',
+        'a': 'Gosho',
+        'b': 'Pesho',
+        'c': 'Both',
+        'correct': 'c'
+    }, {
+        'question': 'How do you add a comment in JavaScript?',
+        'a': 'I just share my opinion.',
+        'b': '<!--This is a comment.-->',
+        'c': '//This is a comment.',
+        'correct': 'c'
+    }];
+
+    var trapsLength = traps.length;
+	var trapIndex = Math.random() * (trapsLength - 1) | 0;
+	var playerAnswer = '';
+	var x = 0;
+	var y = 0;
+	var text = '';
+	var textWidth = 0;
+
+    //draw
 	var stage = new Kinetic.Stage({
         container: 'kinetic',
         width: ctx.canvas.width,
@@ -49,6 +53,7 @@ function setTrap() {
 	var layer = new Kinetic.Layer();
 	
 	function drawTrapBubble() {
+
 		var trapBubble = new Kinetic.Rect({
 			x: stage.width() / 2 - (stage.width() * 0.75) / 2,		//center
 			y: stage.height() / 2 - (stage.height() * 0.75) / 2,	//center
@@ -60,10 +65,8 @@ function setTrap() {
 			cornerRadius: 10,
 			dash: [103, 1]
 		  });	
-		layer.add(trapBubble);
-		//add animation
-		stage.add(layer);        
-        var animate = new Kinetic.Tween({
+      
+        var animation = new Kinetic.Tween({
             node: trapBubble,
             duration: 1,
             x: 50,
@@ -72,7 +75,10 @@ function setTrap() {
             scaleX: 1.2
         }, layer);
 
-        animate.play();
+        layer.add(trapBubble);
+        stage.add(layer);
+        animation.play();
+
 		return trapBubble;
 	}
 	
@@ -94,9 +100,11 @@ function setTrap() {
 			shadowOffset: {x:1,y:1},
 			shadowOpacity: 0.7
 		});
-		newText.offsetX(newText.width()/2);		//center
+
+		newText.offsetX(newText.width()/2); //center
 		layer.add(newText);
-		stage.add(layer);        
+		stage.add(layer);
+
         var animateText = new Kinetic.Tween({
             node: newText,
             duration: 1,
@@ -107,52 +115,53 @@ function setTrap() {
         animateText.play();
 		return newText;
 	}
-//draw	
+	
 	var trapBubble = drawTrapBubble();
-//heading	
-	text = 'Uh oh! You fell into a trap!';
+
+	
 	x = trapBubble.x() + trapBubble.width() / 2;
 	y = trapBubble.y();
 	textWidth = trapBubble.width();
 
-	drawText(text, layer, x, y, 'yellow', 30, 20, textWidth);
-//tip		
-	text = 'Seems like the JavaScript Guardians won\'t let you steal the museum\'s treasures so easily. Solve the riddle below to become faster for a while. But be careful! If your answer is wrong, you\'ll become slower.';
+	drawText(bubbleHeadingText, layer, x, y, 'yellow', 30, 20, textWidth);
+
 	y = trapBubble.y() + 40;
 
-	drawText(text, layer, x, y, '#888', 15, 20, textWidth);	
-//question	
-	text = trapsAll[randomTrapIndex]['question'];
+	drawText(bubbleTipText, layer, x, y, '#888', 15, 20, textWidth);	
+
+    //question	
+	text = traps[trapIndex]['question'];
 	y = trapBubble.y() + 100;
 	
 	drawText(text, layer, x, y, 'yellowgreen', 30, 20, textWidth);
-//answers
-//a
+
+    //answers
+    //a
 	x = trapBubble.x() + trapBubble.width() / 2 - trapBubble.width() / 3;
 	y = trapBubble.y() + trapBubble.height() - 30 - 50;
-	text = 'a) ' + trapsAll[randomTrapIndex]['a'];
+	text = 'a) ' + traps[trapIndex]['a'];
 	textWidth = trapBubble.width() / 3;
 	
 	var trapAnswerA = drawText(text, layer, x-20, y, 'yellowgreen', 22, 2, textWidth, 'a');
 //b	
 	x = trapBubble.x() + trapBubble.width() / 2;
-	text = 'b) ' + trapsAll[randomTrapIndex]['b'];
+	text = 'b) ' + traps[trapIndex]['b'];
 	
 	var trapAnswerB = drawText(text, layer, x, y, 'yellowgreen', 22, 2, textWidth, 'b');
 //c
 	x = trapBubble.x() + trapBubble.width() / 2 + trapBubble.width() / 3;
-	text = 'c) ' + trapsAll[randomTrapIndex]['c'];
+	text = 'c) ' + traps[trapIndex]['c'];
 	
 	var trapAnswerC = drawText(text, layer, x+20, y, 'yellowgreen', 22, 2, textWidth, 'c');
-//add layer to stage
+    //add layer to stage
 	stage.add(layer);
 	
-//pick answer
+    //pick answer by key(a || b || c || A || B || C)
 	function onPickTrapAnswerKeydown() {
 
 		window.addEventListener('keydown', function (ev) {
 			
-			var keyChar = String.fromCharCode(ev.keyCode).toLowerCase();		//gets char on pressed key
+			var keyChar = String.fromCharCode(ev.keyCode).toLowerCase();
 			
 			if (ev.keyCode === 65) {
 				playerAnswer = keyChar;
@@ -172,6 +181,7 @@ function setTrap() {
 		});		
 	}
 	
+    //pick answer by click
 	function onPickTrapAnswerClick (trapAnswer) {
 		trapAnswer.on('click', function() {
 			playerAnswer = this.id();
@@ -184,9 +194,8 @@ function setTrap() {
 	onPickTrapAnswerClick(trapAnswerB, layer);
 	onPickTrapAnswerClick(trapAnswerC, layer);
 
-//check if answer is correct or not
 	function checkIfTrueAnswer(game, pacMan, pacManSpeed) {		
-	    if (playerAnswer == trapsAll[randomTrapIndex]['correct']) {
+	    if (playerAnswer == traps[trapIndex]['correct']) {
 			clearTimeout();
 		    EvilPacmanScore += 100;
 			pacMan.speed = pacManSpeed + 2;
@@ -207,6 +216,7 @@ function setTrap() {
 			
 		}
 	}
+
 	function hideLayer(layer) {
 		layer.remove();
 	}

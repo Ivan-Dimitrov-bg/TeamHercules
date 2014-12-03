@@ -80,7 +80,8 @@ var level1 = {
 
 LevelsDesign.push(level1);
 
-function initializeFood(level){
+function initializeFood(level) {
+
 	var food = LevelsDesign[level].food;
 	var allLettersWithPositions = [];
 
@@ -116,7 +117,8 @@ function initializeFood(level){
     return allLettersWithPositions;
 }
 
-function drawLetters(allLettersWithPositions,ctx) {
+function drawLetters(allLettersWithPositions, ctx) {
+
     for (var i = 0; i < allLettersWithPositions.length; i++) {
         var letter = allLettersWithPositions[i];
         ctx.save();
@@ -134,7 +136,6 @@ function drawLetters(allLettersWithPositions,ctx) {
         ctx.font="bold 12px Calibri";
         ctx.fillText(letter.letter, letter.x, letter.y);
         ctx.restore();
-
     }
 }
 

@@ -66,7 +66,6 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 
     this.ChooseDirectionToContinue = function () {
 
-        //console.log('hui');
         var possibleDirections = [];
         var directions = ['up', 'down', 'left', 'right']
         var reverseDirections = [];
@@ -115,32 +114,31 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
         var posY = ghost.y;
         var currRow = ~~(posY / cellHeight);
         var currCol = ~~(posX / cellHeight);
-
                    
-	       	//if move to left and hit wall
-	       	if (direction === 'left'){
-	       		if (fieldWalls[currRow * 2 + 1][currCol] === '|' && (posX % cellHeight <= (cellHeight + wallHeight) / 2)) {
-	       			return true;
-	       		}
-	       	}
-	       	//if move to right and hit wall
-	       	else if (direction === 'right') {
-	       		if (fieldWalls[currRow * 2 + 1][currCol + 1] === '|' && (posX % cellHeight >= (cellHeight + wallHeight) / 2)) {
-	       			return true;
-	       		}
-	       	}
-	    	//if moves up and hit wall
-	    	else if (direction === 'up'){
-	    		if (fieldWalls[currRow * 2][currCol] === '-' && (posY % cellHeight <= (cellHeight + wallHeight) / 2)) {
-	    			return true;
-	    		}
+	    //if move to left and hit wall
+	    if (direction === 'left'){
+	    	if (fieldWalls[currRow * 2 + 1][currCol] === '|' && (posX % cellHeight <= (cellHeight + wallHeight) / 2)) {
+	    		return true;
 	    	}
-	    	//if moves down and hit wall
-	    	else if (direction === 'down') {
-	    		if (fieldWalls[currRow*2+2][currCol] === '-' && (posY % cellHeight >= (cellHeight + wallHeight) / 2)) {
-	    			return true;
-	    		}
+	    }
+	    //if move to right and hit wall
+	    else if (direction === 'right') {
+	    	if (fieldWalls[currRow * 2 + 1][currCol + 1] === '|' && (posX % cellHeight >= (cellHeight + wallHeight) / 2)) {
+	    		return true;
 	    	}
+	    }
+	    //if moves up and hit wall
+	    else if (direction === 'up'){
+	    	if (fieldWalls[currRow * 2][currCol] === '-' && (posY % cellHeight <= (cellHeight + wallHeight) / 2)) {
+	    		return true;
+	    	}
+	    }
+	    //if moves down and hit wall
+	    else if (direction === 'down') {
+	    	if (fieldWalls[currRow*2+2][currCol] === '-' && (posY % cellHeight >= (cellHeight + wallHeight) / 2)) {
+	    		return true;
+	    	}
+	    }
 
 	    return false;
 	};
@@ -160,8 +158,8 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 }
 
 function creatGuardians(guardiansPositions) {
-    var guardians = [];
 
+    var guardians = [];
 
     for (i = 0; i < guardiansPositions.length; i++) {
         var x = guardiansPositions[i].col * 50 + (cellHeight + wallHeight) / 2,
@@ -176,7 +174,6 @@ function creatGuardians(guardiansPositions) {
 
     return guardians;
 }
-
 
 function resetGuardians(guardians, positions) {
 
