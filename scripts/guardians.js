@@ -1,5 +1,8 @@
+var gardNumber = 0;
 function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
-
+    var soundDie = new Audio("./sounds/pacman_death.wav");
+    this.name = "Guard" + gardNumber;
+    gardNumber++;
     this.x = x;
     this.y = y;
     this.speed = speed;
@@ -7,8 +10,15 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 	this.radius = radius;
 	this.fillColor = fillColor;
 	this.strokeColor = strokeColor;
+	var canvas = document.getElementById("canvas"),
+	ctx = canvas.getContext("2d");
 
-	this.draw = function(ctx) {
+	var fieldWalls = LevelsDesign[0].labyrinth,
+            cellHeight = 50,
+            wallHeight = 6;
+
+	this.draw = function () {
+	    console.log(this.name + ": " + this.x + " " + this.y);
 		ctx.beginPath();
 		ctx.quadraticCurveTo(this.x - this.radius * 0.60, this.y + this.radius * 0.670, this.x, this.y);
 		ctx.lineTo(this.x + this.radius * 0.60, this.y + this.radius * 0.60);
@@ -45,7 +55,6 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 	            this.ChooseDirectionToContinue();
 	        }
 
-
             switch (this.direction) {
                 case 'up':
                     this.y--;
@@ -60,7 +69,6 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
                     this.x ++;
                     break;
             }
-
         }
 	};
 
@@ -92,8 +100,7 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
         }
     };
 
-
-	this.OnCrossroad = function () {
+    this.OnCrossroad = function () {
 
 	    var posY = this.y;
 	    var posX = this.x;
@@ -108,7 +115,7 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 	    }
 	};
 	
-    function detectWallCollision(ghost,direction) {
+	function detectWallCollision(ghost, direction) {
 
         var posX = ghost.x;
         var posY = ghost.y;
@@ -117,25 +124,29 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
                    
 	    //if move to left and hit wall
 	    if (direction === 'left'){
-	    	if (fieldWalls[currRow * 2 + 1][currCol] === '|' && (posX % cellHeight <= (cellHeight + wallHeight) / 2)) {
+	        if (fieldWalls[currRow * 2 + 1][currCol] === '|' &&
+                (posX % cellHeight <= (cellHeight + wallHeight) / 2)) {
 	    		return true;
 	    	}
 	    }
 	    //if move to right and hit wall
 	    else if (direction === 'right') {
-	    	if (fieldWalls[currRow * 2 + 1][currCol + 1] === '|' && (posX % cellHeight >= (cellHeight + wallHeight) / 2)) {
+	        if (fieldWalls[currRow * 2 + 1][currCol + 1] === '|' &&
+                (posX % cellHeight >= (cellHeight + wallHeight) / 2)) {
 	    		return true;
 	    	}
 	    }
 	    //if moves up and hit wall
 	    else if (direction === 'up'){
-	    	if (fieldWalls[currRow * 2][currCol] === '-' && (posY % cellHeight <= (cellHeight + wallHeight) / 2)) {
+	        if (fieldWalls[currRow * 2][currCol] === '-' &&
+                (posY % cellHeight <= (cellHeight + wallHeight) / 2)) {
 	    		return true;
 	    	}
 	    }
 	    //if moves down and hit wall
 	    else if (direction === 'down') {
-	    	if (fieldWalls[currRow*2+2][currCol] === '-' && (posY % cellHeight >= (cellHeight + wallHeight) / 2)) {
+	        if (fieldWalls[currRow * 2 + 2][currCol] === '-' &&
+                (posY % cellHeight >= (cellHeight + wallHeight) / 2)) {
 	    		return true;
 	    	}
 	    }
@@ -157,7 +168,7 @@ function Guardian(x, y, radius, speed, direction, fillColor, strokeColor) {
 	};
 }
 
-function creatGuardians(guardiansPositions) {
+function creatGuardians(guardiansPositions, cellHeight, wallHeight) {
 
     var guardians = [];
 
@@ -175,7 +186,7 @@ function creatGuardians(guardiansPositions) {
     return guardians;
 }
 
-function resetGuardians(guardians, positions) {
+function resetGuardians(guardians, positions, cellHeight, wallHeight) {
 
     for (var i = 0; i < guardians.length; i++) {
         guardians[i].x = positions[i].col * 50 + (cellHeight + wallHeight) / 2;

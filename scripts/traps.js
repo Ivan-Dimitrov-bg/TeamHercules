@@ -2,6 +2,8 @@ function setTrap() {
 
     var bubbleHeadingText = 'Uh oh! You fell into a trap!';
     var bubbleTipText = 'Seems like the JavaScript Guardians won\'t let you steal the museum\'s treasures so easily. Solve the riddle below to become faster for a while. But be careful! If your answer is wrong, you\'ll become slower.';
+    var canvas = document.getElementById("canvas"),
+            ctx = canvas.getContext("2d");
 
     var traps = [{
         'question': 'What is the type of NaN?',
@@ -143,12 +145,12 @@ function setTrap() {
 	textWidth = trapBubble.width() / 3;
 	
 	var trapAnswerA = drawText(text, layer, x-20, y, 'yellowgreen', 22, 2, textWidth, 'a');
-//b	
+    //b	
 	x = trapBubble.x() + trapBubble.width() / 2;
 	text = 'b) ' + traps[trapIndex]['b'];
 	
 	var trapAnswerB = drawText(text, layer, x, y, 'yellowgreen', 22, 2, textWidth, 'b');
-//c
+    //c
 	x = trapBubble.x() + trapBubble.width() / 2 + trapBubble.width() / 3;
 	text = 'c) ' + traps[trapIndex]['c'];
 	
