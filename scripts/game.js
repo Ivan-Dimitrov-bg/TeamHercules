@@ -1,7 +1,8 @@
 ﻿(function () {
     'use strict';
-    require(['pacman'], function (Pacman) {
-        var soundIntro = new Audio("./sounds/pacman_song.wav");
+    require(['pacman', 'guardians'], function (Pacman, Guardian) {
+        var soundIntro = new Audio("./sounds/pacman_song.wav"),
+            soundDie = new Audio("./sounds/pacman_death.wav");
             soundIntro.volume = 0.2;
 
         var canvas = document.getElementById("canvas"),
@@ -20,7 +21,7 @@
             cellHeight = 50,
             wallHeight = 6;
 
-        var guardians = creatGuardians(LevelsDesign[level].guardiansPositions, cellHeight, wallHeight);
+        var guardians = Guardian.creatGuardians(LevelsDesign[level].guardiansPositions, cellHeight, wallHeight);
         var pacManSpeed = 4;
         var pacMan = new Pacman(408, 128, 'left', pacManSpeed, fieldWalls, allLetters);
 
@@ -50,7 +51,7 @@
                 allLetters = initializeFood(level);
                 pacMan = null;
                 pacMan = new Pacman(408, 128, 'left', pacManSpeed, fieldWalls, allLetters);
-                //resetGuardians(guardians, LevelsDesign[level].guardiansPositions);
+                Guardian.resetGuardians(guardians, LevelsDesign[level].guardiansPositions);
                 newGame = true;
                 this.pause = false;
             };
@@ -62,10 +63,17 @@
                     pacMan.draw();
                     pacMan.move(allLetters);
 
-                    for (i = 0; i < guardians.length; i++) {
+                    for (var i = 0; i < guardians.length; i++) {
                         guardians[i].draw();
                         guardians[i].move();
-                        guardians[i].detectCollisionWithPacman(pacMan);
+                        if (guardians[i].detectCollisionWithPacman(pacMan)) {
+                            soundDie.play();
+                            if (lives > 1) {
+                                loseLife();
+                            } else {
+                                endGame();
+                            }
+                        }
                     }
 
                     displayScore();
@@ -79,7 +87,7 @@
 
                 pacMan.draw(ctx);
 
-                for (i = 0; i < guardians.length; i++) {
+                for (var i = 0; i < guardians.length; i++) {
                     guardians[i].draw();
                 }
 
@@ -124,8 +132,8 @@
             game.pause = true;
             lives--;
             setTimeout(function () {
-                resetPacMan(pacMan);
-                resetGuardians(guardians, LevelsDesign[level].guardiansPositions);
+                pacMan.reset();
+                Guardian.resetGuardians(guardians, LevelsDesign[level].guardiansPositions);
                 game.pause = false;
             }, 2000);
         }
@@ -134,7 +142,7 @@
             var x;
             var y;
 
-            for (i = 0; i < lives; i++) {
+            for (var i = 0; i < lives; i++) {
                 x = 440 + i * 30;
                 y = 430;
 
@@ -179,7 +187,7 @@
                 return b - a;
             });
             //add first highScoresCount number of
-            for (i = 0; i < highScoresCount; i++) {
+            for (var i = 0; i < highScoresCount; i++) {
                 var highScore = sortedScores[i];
                 if (highScore && highScore !== undefined) {
                     var scoreListItem = document.createElement('li');

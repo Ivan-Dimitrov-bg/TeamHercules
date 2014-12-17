@@ -5,6 +5,7 @@
         paths: {
             "game": "game",
             "pacman": "pacman",
+            "guardians": "guardians",
             "additionalFunctions": "additionalFunctions",
         }
     });

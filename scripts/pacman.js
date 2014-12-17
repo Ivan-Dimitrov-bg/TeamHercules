@@ -1,4 +1,4 @@
-define(["CanvasDrawer"], function (CanvasDrawer) {
+define(["CanvasDrawer"],function (CanvasDrawer) {
     var PacMan = (function () {
         function PacMan(x, y, direction, speed, fieldWalls, allLetters) {
 
@@ -6,7 +6,6 @@ define(["CanvasDrawer"], function (CanvasDrawer) {
             soundEat.volume = 0.3;
             var cellHeight = 50, 
                 wallHeight = 6;
-            this.fielsWalls = fieldWalls;
             this.positionX = x;
             this.positionY = y;
             this.speed = speed;
@@ -17,7 +16,6 @@ define(["CanvasDrawer"], function (CanvasDrawer) {
             this.frame = 0;
 
             this.draw = function () {
-
                 CanvasDrawer.DrawPacman(this.positionX, this.positionY, this.r, this.direction, this.frame);
                 
                 this.frame++;
@@ -60,7 +58,7 @@ define(["CanvasDrawer"], function (CanvasDrawer) {
             this.detectCollisions = function (direction) {
                 var collisionDetected = false;
 
-                if (detectCollisionsWithWalls(direction, this.positionX, this.positionY, this.fielsWalls)) {
+                if (detectCollisionsWithWalls(direction, this.positionX, this.positionY, fieldWalls)) {
                     collisionDetected = true;
                 }
 
@@ -79,7 +77,7 @@ define(["CanvasDrawer"], function (CanvasDrawer) {
                         //TO DO += 10;
                         if (letter.letter == '{') {
                             setTrap();
-                            game.pause = true;
+                            game.pause = true; //TO DO
                         }
 
                         soundEat.play()
@@ -144,13 +142,6 @@ define(["CanvasDrawer"], function (CanvasDrawer) {
                 }
             }
 
-            this.resetPacMan = function resetPacMan(pacMan) {
-                pacMan.positionX = 408;
-                pacMan.positionY = 128;
-                pacMan.wantedDirection = 'left';
-                pacMan.speed = pacManSpeed;
-            };
-
             (function StartDirectionChengeListener(object) {
                 document.onkeydown = khandle;
 
@@ -174,6 +165,13 @@ define(["CanvasDrawer"], function (CanvasDrawer) {
                 }
             } )(this);
         }
+
+        PacMan.prototype.reset = function () {
+            this.positionX = 408;
+            this.positionY = 128;
+            this.wantedDirection = 'left';
+            this.speed = 4;//pacManSpeed; TO DO
+        };
 
         return PacMan;
     }());

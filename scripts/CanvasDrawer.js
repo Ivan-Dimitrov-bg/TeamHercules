@@ -2,7 +2,6 @@
 define(function () {
     'use strict'
     var CanvasDrawer = (function () {
-
         var CanvasDrawer = function CanvasDrawer() {
         };
 
